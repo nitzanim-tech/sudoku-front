@@ -1,4 +1,5 @@
 const generateSudoku = () => {
+  console.log("GENERATED SUDUKU");
   const side = 4;
   const board = Array(side)
     .fill()

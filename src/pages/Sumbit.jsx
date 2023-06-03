@@ -5,6 +5,8 @@ import "ace-builds/src-noconflict/mode-python";
 import "ace-builds/src-noconflict/theme-chrome";
 
 function Submit() {
+      console.log("SUMBIT ");
+
   const [code, setCode] = useState(
     '# Write your code here...\na=input("hi")\nprint(a)'
   );

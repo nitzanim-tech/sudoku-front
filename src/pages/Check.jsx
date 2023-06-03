@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useLocation } from "react-router-dom";
 import { generateSudoku } from "../util/generateSudoku";
 import SudokuTable from "../components/SudukuTable";
@@ -7,7 +7,7 @@ import crossImg from "../assets/img/cross.png";
 function Check() {
   const location = useLocation();
   const code = location.state.code;
-  const suduku = generateSudoku();
+  const sudukuRef = useRef(generateSudoku());
   const [output, setOutput] = useState([]);
 
   useEffect(() => {
@@ -18,12 +18,9 @@ function Check() {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ script: code, input: suduku }),
+          body: JSON.stringify({ script: code, input: sudukuRef.current }),
         });
         const output = await response.text();
-        console.log(JSON.parse(output));
-        console.log(suduku);
-
         setOutput(JSON.parse(output));
       } catch (error) {
         console.error(error);
@@ -46,13 +43,13 @@ function Check() {
 
         <tr>
           <td>
-            <SudokuTable board={suduku} />
+            <SudokuTable board={sudukuRef.current} />
           </td>
           <td>
             <SudokuTable board={output} />
           </td>
           <td>
-            <img src={crossImg} class="feedback-image" />
+            <img src={crossImg} className="feedback-image" />
           </td>
         </tr>
       </tbody>
