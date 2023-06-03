@@ -4,12 +4,15 @@ import { generateSudoku } from "../util/generateSudoku";
 import SudokuTable from "../components/SudukuTable";
 import CheckedSudokuTable from "../components/CheckedSudokuTable";
 import crossImg from "../assets/img/cross.png";
+import verImg from "../assets/img/verified.png";
 
 function Check() {
   const location = useLocation();
   const code = location.state.code;
   const sudukuRef = useRef(generateSudoku());
   const [output, setOutput] = useState([]);
+  const [isValid, setIsValid] = useState(false);
+
   console.log("IN CHECK");
 
   useEffect(() => {
@@ -57,11 +60,12 @@ function Check() {
               <CheckedSudokuTable
                 studentAns={output}
                 sudoku={sudukuRef.current}
+                onValidityChange={setIsValid}
               />
             )}
           </td>
           <td>
-            <img src={crossImg} className="feedback-image" />
+            <img src={isValid ? verImg : crossImg} className="feedback-image" />
           </td>
         </tr>
       </tbody>

@@ -1,14 +1,17 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { findEmptyCells } from "../util/findEmptyCells";
 import { checkCellValidity } from "../util/isValid";
 
-const CheckedSudokuTable = ({ studentAns, sudoku }) => {
-  console.log(studentAns);
+const CheckedSudokuTable = ({ studentAns, sudoku, onValidityChange }) => {
   const emptyCells = findEmptyCells(sudoku);
   const validCells = checkCellValidity(studentAns, emptyCells);
+  const allCellsValid = validCells.every((isValid) => isValid);
 
-  console.log(emptyCells);
-  console.log(validCells);
+  useEffect(() => {
+    if (onValidityChange) {
+      onValidityChange(allCellsValid);
+    }
+  }, [allCellsValid, onValidityChange]);
 
   return (
     <table className="sudoku-table">
