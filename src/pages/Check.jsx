@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { useLocation } from "react-router-dom";
 import { generateSudoku } from "../util/generateSudoku";
 import SudokuTable from "../components/SudukuTable";
+import CheckedSudokuTable from "../components/CheckedSudokuTable";
 import crossImg from "../assets/img/cross.png";
 
 function Check() {
@@ -9,10 +10,13 @@ function Check() {
   const code = location.state.code;
   const sudukuRef = useRef(generateSudoku());
   const [output, setOutput] = useState([]);
+  console.log("IN CHECK");
 
   useEffect(() => {
     async function fetchData() {
       try {
+        console.log("IN USE EFFECT");
+
         const response = await fetch("http://localhost:3000/run-script", {
           method: "POST",
           headers: {
@@ -21,6 +25,9 @@ function Check() {
           body: JSON.stringify({ script: code, input: sudukuRef.current }),
         });
         const output = await response.text();
+        console.log(output);
+        console.log(sudukuRef.current);
+
         setOutput(JSON.parse(output));
       } catch (error) {
         console.error(error);
@@ -46,7 +53,12 @@ function Check() {
             <SudokuTable board={sudukuRef.current} />
           </td>
           <td>
-            <SudokuTable board={output} />
+            {output.length > 0 && (
+              <CheckedSudokuTable
+                studentAns={output}
+                sudoku={sudukuRef.current}
+              />
+            )}
           </td>
           <td>
             <img src={crossImg} className="feedback-image" />

@@ -3,13 +3,12 @@ import { useNavigate } from "react-router-dom";
 import AceEditor from "react-ace";
 import "ace-builds/src-noconflict/mode-python";
 import "ace-builds/src-noconflict/theme-chrome";
+import { examplecode } from "../util/exampleCode";
 
 function Submit() {
-      console.log("SUMBIT ");
+  //const [code, setCode] = useState('# Write your code here...\na=input("hi")\nprint(a)'  );
+  const [code, setCode] = useState(examplecode);
 
-  const [code, setCode] = useState(
-    '# Write your code here...\na=input("hi")\nprint(a)'
-  );
   const navigate = useNavigate();
 
   const handleSubmit = () => {

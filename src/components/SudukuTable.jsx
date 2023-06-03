@@ -1,7 +1,4 @@
 const SudokuTable = ({ board }) => {
-  console.log("in SudokuTable:");
-  console.log(board);
-
   return (
     <table className="sudoku-table">
       <tbody>
