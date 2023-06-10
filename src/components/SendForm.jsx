@@ -1,86 +1,102 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Card, InputLabel, MenuItem, FormControl, Select } from "@mui/material";
-import { TextField } from "@mui/material";
-
-import { regions } from "../util/regions";
+import { TextField, Grid } from "@mui/material";
+import { getRegions } from "../requests/getRegions";
+import { getInsByReg } from "../requests/getInstByReg";
 
 const SendForm = () => {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [token, setToken] = useState(null);
-  const [error, setError] = useState(null);
-  const [searchTerm, setSearchTerm] = useState(null);
+  const [regions, setRegions] = useState([]);
+  const [instructors, setInstructors] = useState([]);
+
+  const [studentName, setStudentName] = useState("");
+  const [selectedRegion, setSelectedRegion] = useState("");
+  const [selectedInst, setSelectedInst] = useState("");
+
+  useEffect(() => {
+    const fetchRegions = async () => {
+      const data = await getRegions();
+      setRegions(data);
+    };
+    fetchRegions();
+  }, []);
+
+  useEffect(() => {
+    const fetchInstructors = async () => {
+      if (selectedRegion) {
+        console.log("Selected region:", selectedRegion);
+        const data = await getInsByReg({ regionId: selectedRegion });
+        setInstructors(data);
+      }
+    };
+    fetchInstructors();
+  }, [selectedRegion]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log(username, password);
-    try {
-      const response = await fetch("http://localhost:3000/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username, password }),
-      });
-      if (response.ok) {
-        const data = await response.json();
-        setToken(data.token);
-        localStorage.setItem("token", data.token);
-        setError(null);
-      } else {
-        setToken(null);
-        setError("Invalid username or password");
-      }
-    } catch (err) {
-      setToken(null);
-      setError("An error occurred");
-    }
   };
   return (
-    <Card sx={{ minWidth: 60 }}>
+    <Card sx={{ minWidth: 60, width: "600px" }}>
       <form onSubmit={handleSubmit}>
-        <FormControl fullWidth>
-          <TextField
-            id="name"
-            label="שם"
-            type="search"
-            value={searchTerm}
-            onChange={(e) => setUsername(e.target.value)}
-          />
-        </FormControl>
-        <FormControl fullWidth>
-          <InputLabel id="region-label">אזור</InputLabel>
-          <Select
-            labelId="region-label"
-            id="region-select"
-            onChange={(e) => setPassword(e.target.value)}
-          >
-            {regions.map((region) => (
-              <MenuItem key={region.id} value={region.id}>
-                {region.name}
-              </MenuItem>
-            ))}
-          </Select>
-        </FormControl>
-        <FormControl fullWidth>
-          <InputLabel id="inst-label">מדריך</InputLabel>
-          <Select
-            labelId="inst-label"
-            id="inst-select"
-            onChange={(e) => setPassword(e.target.value)}
-          >
-            {regions.map((region) => (
-              <MenuItem key={region.id} value={region.id}>
-                {region.name}
-              </MenuItem>
-            ))}
-          </Select>
-        </FormControl>
+        <Grid container spacing={2}>
+          <Grid item xs={3}>
+            <div style={{ display: "flex", justifyContent: "center" }}>
+              <button
+                type="submit"
+                style={{ backgroundColor: "#008AD1", color: "white" }}
+              >
+                הגש
+              </button>
+            </div>
+          </Grid>
 
-        <button type="submit">הגש</button>
+          <Grid item xs={3}>
+            <FormControl fullWidth sx={{ mt: 1 }}>
+              <TextField
+                id="name"
+                label="שם"
+                type="search"
+                value={studentName}
+                onChange={(e) => setStudentName(e.target.value)}
+              />
+            </FormControl>
+          </Grid>
+
+          <Grid item xs={3}>
+            <FormControl fullWidth sx={{ mt: 1 }}>
+              <InputLabel id="inst-label">מדריך</InputLabel>
+              <Select
+                labelId="inst-label"
+                id="inst-select"
+                onChange={(e) => setSelectedInst(e.target.value)}
+              >
+                {instructors.map((instructor) => (
+                  <MenuItem key={instructor.id} value={instructor.id}>
+                    {instructor.name}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+          </Grid>
+
+          <Grid item xs={3}>
+            <FormControl fullWidth sx={{ mt: 1 }}>
+              <InputLabel id="region-label">אזור</InputLabel>
+              <Select
+                labelId="region-label"
+                id="region-select"
+                onChange={(e) => setSelectedRegion(e.target.value)}
+              >
+                {regions.map((region) => (
+                  <MenuItem key={region.id} value={region.id}>
+                    {region.name}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+          </Grid>
+        </Grid>
       </form>
-      {token && <div>Token: {token}</div>}
-      {error && <div>{error}</div>}
     </Card>
   );
 };
-
 export default SendForm;

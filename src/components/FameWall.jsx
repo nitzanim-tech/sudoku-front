@@ -36,14 +36,10 @@ const FameWall = ({ students }) => {
       )}
 
       {students.length > 3 && (
-        <Box sx={{ margin: 3 }}>
-          <Grid
-            container
-            rowSpacing={2}
-            columnSpacing={{ xs: 1, sm: 2, md: 3 }}
-          >
+        <Box sx={{ margin: 3, width: "600px" }}>
+          <Grid rowSpacing={2} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
             {students.slice(3).map((student, index) => (
-              <Grid xs={3} key={index}>
+              <Grid xs={12} key={index}>
                 <StudentCard place={index + 4} student={student} />
               </Grid>
             ))}

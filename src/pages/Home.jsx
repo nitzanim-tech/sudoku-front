@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import logoImg from "../assets/img/logo.png";
 import FameWall from "../components/FameWall";
@@ -22,7 +21,13 @@ function Home() {
         מעל גדרות כדי לרגל אחר השכנים שלה. לַדַרסְלים היה תינוק ששמו דַאדְלִי,
         ובעיניהם לא היה בעולם ילד מוצלח ממנו.
       </p>
-      <button onClick={() => navigateTo("/submit")}>להגשה</button>
+
+      <button
+        style={{ backgroundColor: "#008AD1", color: "white" }}
+        onClick={() => navigateTo("/submit")}
+      >
+        להגשה
+      </button>
       <div
         style={{
           backgroundColor: "#003061",
@@ -34,7 +39,7 @@ function Home() {
           marginRight: "-50vw",
         }}
       >
-        <h1 style={{ color: "white" }}>קיר התהילה</h1>
+        <h2 style={{ color: "white" }}>קיר התהילה</h2>
         <FameWall students={students} />
       </div>
     </>

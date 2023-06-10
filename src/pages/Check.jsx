@@ -6,6 +6,7 @@ import CheckedSudokuTable from "../components/CheckedSudokuTable";
 import crossImg from "../assets/img/cross.png";
 import verImg from "../assets/img/verified.png";
 import SendForm from "../components/SendForm";
+import { runScript } from "../requests/runScript";
 
 function Check() {
   const location = useLocation();
@@ -16,22 +17,11 @@ function Check() {
 
   useEffect(() => {
     async function fetchData() {
-      try {
-        const response = await fetch("http://localhost:3000/run-script", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ script: code, input: sudukuRef.current }),
-        });
-        const output = await response.text();
-        console.log(output);
-        console.log(sudukuRef.current);
-
-        setOutput(JSON.parse(output));
-      } catch (error) {
-        console.error(error);
-      }
+      const output = await runScript({
+        script: code,
+        input: sudukuRef.current,
+      });
+      setOutput(JSON.parse(output));
     }
     fetchData();
   }, []);
