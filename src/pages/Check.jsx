@@ -13,7 +13,6 @@ function Check() {
   const [output, setOutput] = useState([]);
   const [isValid, setIsValid] = useState(false);
 
-  console.log("IN CHECK");
 
   useEffect(() => {
     async function fetchData() {

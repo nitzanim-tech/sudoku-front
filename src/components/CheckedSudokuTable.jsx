@@ -2,11 +2,13 @@ import React, { useEffect } from "react";
 import { findEmptyCells } from "../util/findEmptyCells";
 import { checkCellValidity } from "../util/isValid";
 
+const RED = "#ff9999";
+const GREEN = "#b3ff99";
+
 const CheckedSudokuTable = ({ studentAns, sudoku, onValidityChange }) => {
   const emptyCells = findEmptyCells(sudoku);
   const validCells = checkCellValidity(studentAns, emptyCells);
   const allCellsValid = validCells.every((isValid) => isValid);
-
   useEffect(() => {
     if (onValidityChange) {
       onValidityChange(allCellsValid);
@@ -28,11 +30,7 @@ const CheckedSudokuTable = ({ studentAns, sudoku, onValidityChange }) => {
                   key={j}
                   style={{
                     backgroundColor:
-                      cellIndex !== -1
-                        ? isValid
-                          ? "#b3ff99"
-                          : "#ff9999"
-                        : undefined,
+                      cellIndex !== -1 ? (isValid ? GREEN : RED) : undefined,
                   }}
                 >
                   {cell}
@@ -47,3 +45,4 @@ const CheckedSudokuTable = ({ studentAns, sudoku, onValidityChange }) => {
 };
 
 export default CheckedSudokuTable;
+

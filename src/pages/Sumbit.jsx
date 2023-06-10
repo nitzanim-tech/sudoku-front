@@ -3,12 +3,13 @@ import { useNavigate } from "react-router-dom";
 import AceEditor from "react-ace";
 import "ace-builds/src-noconflict/mode-python";
 import "ace-builds/src-noconflict/theme-chrome";
+
 import { examplecode } from "../util/exampleCode";
+import SendForm from "../components/SendForm";
+
 
 function Submit() {
-  //const [code, setCode] = useState('# Write your code here...\na=input("hi")\nprint(a)'  );
   const [code, setCode] = useState(examplecode);
-
   const navigate = useNavigate();
 
   const handleSubmit = () => {
@@ -28,6 +29,7 @@ function Submit() {
       />
 
       <button onClick={handleSubmit}>הגש</button>
+      <SendForm />
     </div>
   );
 }
