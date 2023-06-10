@@ -6,8 +6,7 @@ import participantImg from "../assets/img/medals/participants.png";
 import { Card, Box, Avatar, Stack, Typography, Chip } from "@mui/material";
 import { Divider } from "@mui/material";
 
-const StudentCard = ({ place = 0, student = 0 }) => {
-  // Set the size, avatar source, and font size based on the place prop
+const StudentCard = ({ place = 0, student }) => {
   let size;
   let avatarSrc;
   let fontSize;
@@ -37,32 +36,45 @@ const StudentCard = ({ place = 0, student = 0 }) => {
   }
 
   return (
-    <Card>
-      <Box sx={{ p: 2 }} display="flex" flexDirection="row-reverse">
-        <Avatar
-          variant="rounded"
-          src={avatarSrc}
-          sx={{ width: size, height: size }}
-        />
-        <Stack spacing={0.5}>
-          <Typography fontWeight={700} sx={{ fontSize }}>
-            יוסי בניון
-          </Typography>
-          <Typography variant="body2" color="text.secondary" sx={{ fontSize }}>
-            23.10.23 | 07:00
-          </Typography>
+    <div
+      style={{
+        maxWidth: 250,
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
+      <Card>
+        <Box sx={{ p: 2 }} display="flex" flexDirection="row-reverse">
+          <Avatar
+            variant="rounded"
+            src={avatarSrc}
+            sx={{ width: size, height: size }}
+          />
+          <Stack spacing={0.5}>
+            <Typography fontWeight={700} sx={{ fontSize }}>
+              {student.name}
+            </Typography>
+            <Typography
+              variant="body2"
+              color="text.secondary"
+              sx={{ fontSize }}
+            >
+              {student.date}
+            </Typography>
+          </Stack>
+        </Box>
+        <Divider />
+        <Stack
+          direction="row"
+          alignItems="center"
+          justifyContent="flex-end"
+          sx={{ px: 2, py: 1, bgcolor: "background.default" }}
+        >
+          <Chip label={student.region} />
         </Stack>
-      </Box>
-      <Divider />
-      <Stack
-        direction="row"
-        alignItems="center"
-        justifyContent="flex-end"
-        sx={{ px: 2, py: 1, bgcolor: "background.default" }}
-      >
-        <Chip label="באר שבע" />
-      </Stack>
-    </Card>
+      </Card>
+    </div>
   );
 };
 

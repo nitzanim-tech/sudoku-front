@@ -5,7 +5,6 @@ import "ace-builds/src-noconflict/mode-python";
 import "ace-builds/src-noconflict/theme-chrome";
 
 import { examplecode } from "../util/exampleCode";
-import SendForm from "../components/SendForm";
 
 
 function Submit() {
@@ -28,8 +27,7 @@ function Submit() {
         onChange={(newValue) => setCode(newValue)}
       />
 
-      <button onClick={handleSubmit}>הגש</button>
-      <SendForm />
+      <button onClick={handleSubmit}>בדוק</button>
     </div>
   );
 }

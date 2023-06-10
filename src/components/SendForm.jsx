@@ -1,12 +1,6 @@
 import React, { useState } from "react";
-import {
-  Box,
-  InputLabel,
-  MenuItem,
-  FormControl,
-  Select,
-  TextField,
-} from "@mui/material";
+import { Card, InputLabel, MenuItem, FormControl, Select } from "@mui/material";
+import { TextField } from "@mui/material";
 
 import { regions } from "../util/regions";
 
@@ -41,7 +35,7 @@ const SendForm = () => {
     }
   };
   return (
-    <Box sx={{ minWidth: 60 }}>
+    <Card sx={{ minWidth: 60 }}>
       <form onSubmit={handleSubmit}>
         <FormControl fullWidth>
           <TextField
@@ -66,11 +60,26 @@ const SendForm = () => {
             ))}
           </Select>
         </FormControl>
-        <button type="submit">Login</button>
+        <FormControl fullWidth>
+          <InputLabel id="inst-label">מדריך</InputLabel>
+          <Select
+            labelId="inst-label"
+            id="inst-select"
+            onChange={(e) => setPassword(e.target.value)}
+          >
+            {regions.map((region) => (
+              <MenuItem key={region.id} value={region.id}>
+                {region.name}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+
+        <button type="submit">הגש</button>
       </form>
       {token && <div>Token: {token}</div>}
       {error && <div>{error}</div>}
-    </Box>
+    </Card>
   );
 };
 

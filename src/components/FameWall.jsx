@@ -1,24 +1,56 @@
 import React from "react";
 import StudentCard from "./StudentCard";
-const FameWall = () => {
+import { Box, Grid } from "@mui/material";
+
+const FameWall = ({ students }) => {
   return (
-    <>
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)" }}>
-        <div style={{ gridColumnEnd: "span 1" }}>
-          <StudentCard place={1} student={0} />
-        </div>
-        <div style={{ gridColumnEnd: "span 1" }}>
-          <StudentCard place={2} student={0} />
-        </div>
-        <div style={{ gridColumnEnd: "span 1" }}>
-          <StudentCard place={3} student={0} />
-        </div>
-        <StudentCard place={4} student={0} />
-        <StudentCard place={5} student={0} />
-        <StudentCard place={6} student={0} />
-        <StudentCard place={7} student={0} />
-      </div>
-    </>
+    <Box
+      sx={{
+        display: "flex",
+        justifyContent: "center",
+        flexDirection: "column",
+        alignItems: "center",
+      }}
+    >
+      {students.length >= 1 && (
+        <Box sx={{ margin: 1 }}>
+          <StudentCard place={1} student={students[0]} />
+        </Box>
+      )}
+
+      {students.length >= 3 && (
+        <Box sx={{ margin: 3 }}>
+          <Grid
+            container
+            rowSpacing={1}
+            columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+          >
+            <Grid xs={6}>
+              <StudentCard place={2} student={students[1]} />
+            </Grid>
+            <Grid xs={6}>
+              <StudentCard place={3} student={students[2]} />
+            </Grid>
+          </Grid>
+        </Box>
+      )}
+
+      {students.length > 3 && (
+        <Box sx={{ margin: 3 }}>
+          <Grid
+            container
+            rowSpacing={2}
+            columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+          >
+            {students.slice(3).map((student, index) => (
+              <Grid xs={3} key={index}>
+                <StudentCard place={index + 4} student={student} />
+              </Grid>
+            ))}
+          </Grid>
+        </Box>
+      )}
+    </Box>
   );
 };
 

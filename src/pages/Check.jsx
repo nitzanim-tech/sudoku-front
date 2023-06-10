@@ -5,6 +5,7 @@ import SudokuTable from "../components/SudukuTable";
 import CheckedSudokuTable from "../components/CheckedSudokuTable";
 import crossImg from "../assets/img/cross.png";
 import verImg from "../assets/img/verified.png";
+import SendForm from "../components/SendForm";
 
 function Check() {
   const location = useLocation();
@@ -13,12 +14,9 @@ function Check() {
   const [output, setOutput] = useState([]);
   const [isValid, setIsValid] = useState(false);
 
-
   useEffect(() => {
     async function fetchData() {
       try {
-        console.log("IN USE EFFECT");
-
         const response = await fetch("http://localhost:3000/run-script", {
           method: "POST",
           headers: {
@@ -39,36 +37,42 @@ function Check() {
   }, []);
 
   return (
-    <table>
-      <tbody>
-        <tr>
-          <td>
-            <h2>טסט</h2>
-          </td>
-          <td>
-            <h2>פלט</h2>
-          </td>
-        </tr>
+    <>
+      <table>
+        <tbody>
+          <tr>
+            <td>
+              <h2>טסט</h2>
+            </td>
+            <td>
+              <h2>פלט</h2>
+            </td>
+          </tr>
 
-        <tr>
-          <td>
-            <SudokuTable board={sudukuRef.current} />
-          </td>
-          <td>
-            {output.length > 0 && (
-              <CheckedSudokuTable
-                studentAns={output}
-                sudoku={sudukuRef.current}
-                onValidityChange={setIsValid}
+          <tr>
+            <td>
+              <SudokuTable board={sudukuRef.current} />
+            </td>
+            <td>
+              {output.length > 0 && (
+                <CheckedSudokuTable
+                  studentAns={output}
+                  sudoku={sudukuRef.current}
+                  onValidityChange={setIsValid}
+                />
+              )}
+            </td>
+            <td>
+              <img
+                src={isValid ? verImg : crossImg}
+                className="feedback-image"
               />
-            )}
-          </td>
-          <td>
-            <img src={isValid ? verImg : crossImg} className="feedback-image" />
-          </td>
-        </tr>
-      </tbody>
-    </table>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <SendForm />
+    </>
   );
 }
 
