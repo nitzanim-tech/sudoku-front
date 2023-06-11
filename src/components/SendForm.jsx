@@ -11,13 +11,16 @@ import { TextField, Grid } from "@mui/material";
 import { getRegions } from "../requests/getRegions";
 import { getInsByReg } from "../requests/getInstByReg";
 
-const SendForm = () => {
+const SendForm = ({
+  studentName,
+  setStudentName,
+  selectedRegion,
+  setSelectedRegion,
+  selectedInst,
+  setSelectedInst,
+}) => {
   const [regions, setRegions] = useState([]);
   const [instructors, setInstructors] = useState([]);
-
-  const [studentName, setStudentName] = useState("");
-  const [selectedRegion, setSelectedRegion] = useState("");
-  const [selectedInst, setSelectedInst] = useState("");
 
   useEffect(() => {
     const fetchRegions = async () => {

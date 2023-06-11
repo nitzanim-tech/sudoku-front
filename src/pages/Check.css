@@ -1,0 +1,45 @@
+.container {
+  background-color: #003061;
+  width: 100vw;
+  position: relative;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-top: -3vw;
+  margin-right: -50vw;
+}
+
+.card {
+  max-width: 420px;
+  height: 200px;
+  margin-bottom: 1vw;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  justify-items: center;
+}
+
+.card {
+  max-width: 420px;
+}
+
+.flex {
+  display: flex;
+}
+
+.margin {
+  margin: 0 8px;
+}
+
+.gray {
+  color: gray;
+}
+
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
