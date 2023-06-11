@@ -1,4 +1,4 @@
-const generateSudoku = () => {
+const generateSudoku = (missing) => {
   const side = 4;
   const board = Array(side)
     .fill()
@@ -12,9 +12,15 @@ const generateSudoku = () => {
     }
   }
 
-  const missingNumbers = randomInt(4, 6);
-  for (let i = 0; i < missingNumbers; i++) {
-    board[randomInt(0, side - 1)][randomInt(0, side - 1)] = null;
+  const missingNumbers = missing;
+  let cellsSetToNull = 0;
+  while (cellsSetToNull < missingNumbers) {
+    const row = randomInt(0, side - 1);
+    const col = randomInt(0, side - 1);
+    if (board[row][col] !== null) {
+      board[row][col] = null;
+      cellsSetToNull++;
+    }
   }
   return board;
 };

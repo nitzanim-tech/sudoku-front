@@ -1,5 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { Card, InputLabel, MenuItem, FormControl, Select } from "@mui/material";
+import {
+  Card,
+  InputLabel,
+  MenuItem,
+  FormControl,
+  Select,
+  OutlinedInput,
+} from "@mui/material";
 import { TextField, Grid } from "@mui/material";
 import { getRegions } from "../requests/getRegions";
 import { getInsByReg } from "../requests/getInstByReg";
@@ -62,12 +69,13 @@ const SendForm = () => {
           </Grid>
 
           <Grid item xs={3}>
-            <FormControl fullWidth sx={{ mt: 1 }}>
-              <InputLabel id="inst-label">מדריך</InputLabel>
+            <FormControl fullWidth variant="outlined" sx={{ mt: 1 }}>
+              <InputLabel htmlFor="inst-select">מדריך</InputLabel>
               <Select
                 labelId="inst-label"
                 id="inst-select"
                 onChange={(e) => setSelectedInst(e.target.value)}
+                input={<OutlinedInput label="מדריך" id="inst-label" />}
               >
                 {instructors.map((instructor) => (
                   <MenuItem key={instructor.id} value={instructor.id}>
@@ -79,12 +87,13 @@ const SendForm = () => {
           </Grid>
 
           <Grid item xs={3}>
-            <FormControl fullWidth sx={{ mt: 1 }}>
-              <InputLabel id="region-label">אזור</InputLabel>
+            <FormControl fullWidth variant="outlined" sx={{ mt: 1 }}>
+              <InputLabel htmlFor="region-select">אזור</InputLabel>
               <Select
                 labelId="region-label"
                 id="region-select"
                 onChange={(e) => setSelectedRegion(e.target.value)}
+                input={<OutlinedInput label="אזור" id="region-select" />}
               >
                 {regions.map((region) => (
                   <MenuItem key={region.id} value={region.id}>
