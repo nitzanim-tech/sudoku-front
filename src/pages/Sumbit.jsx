@@ -3,16 +3,16 @@ import { useNavigate } from "react-router-dom";
 import AceEditor from "react-ace";
 import "ace-builds/src-noconflict/mode-python";
 import "ace-builds/src-noconflict/theme-chrome";
-
 import { examplecode } from "../util/exampleCode";
 import logoImg from "../assets/img/logo.png";
 
 function Submit() {
-  const [code, setCode] = useState(examplecode);
+  const [code, setCode] = useState(localStorage.getItem("code") || examplecode);
   const navigate = useNavigate();
 
   const handleSubmit = () => {
-    navigate("/check", { state: { code } });
+    localStorage.setItem("code", code);
+    navigate("/check");
   };
 
   return (

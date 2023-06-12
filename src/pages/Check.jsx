@@ -1,16 +1,15 @@
 import React, { useState, useEffect, useRef } from "react";
-import { useLocation } from "react-router-dom";
 import { generateSudoku } from "../util/generateSudoku";
 import { crossImg, verImg } from "../assets/img";
 import { runScript } from "../requests/runScript";
 import { Card, CardContent } from "@mui/material";
 import { Sudoku, CheckedSudoku, SendForm } from "../components";
+import { useNavigate } from "react-router-dom";
 
 import "./Check.css";
 
 function Check() {
-  const location = useLocation();
-  const code = location.state.code;
+  const code = localStorage.getItem("code") || "";
   const sudokusRef = useRef([
     generateSudoku(3),
     generateSudoku(1),
@@ -19,10 +18,24 @@ function Check() {
   ]);
   const [outputs, setOutputs] = useState([[], [], [], []]);
   const [isValid, setIsValid] = useState([false, false, false, false]);
-
   const [studentName, setStudentName] = useState("");
   const [selectedRegion, setSelectedRegion] = useState("");
   const [selectedInst, setSelectedInst] = useState("");
+  const [sent, setSent] = useState(false);
+  const navigate = useNavigate();
+
+  const pass = isValid.every((value) => value === true);
+
+  const formProps = {
+    studentName,
+    setStudentName,
+    selectedRegion,
+    setSelectedRegion,
+    selectedInst,
+    setSelectedInst,
+    pass,
+    setSent,
+  };
 
   useEffect(() => {
     async function fetchData() {
@@ -38,6 +51,13 @@ function Check() {
     }
     fetchData();
   }, []);
+
+  useEffect(() => {
+    console.log("sent change(check)");
+    if (sent) {
+      navigate("/sent");
+    }
+  }, [sent]);
 
   return (
     <div className="container">
@@ -87,14 +107,7 @@ function Check() {
       </div>
 
       <div className="center">
-        <SendForm
-          studentName={studentName}
-          setStudentName={setStudentName}
-          selectedRegion={selectedRegion}
-          setSelectedRegion={setSelectedRegion}
-          selectedInst={selectedInst}
-          setSelectedInst={setSelectedInst}
-        />
+        <SendForm {...formProps} />
       </div>
     </div>
   );

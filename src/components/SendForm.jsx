@@ -1,15 +1,9 @@
 import React, { useState, useEffect } from "react";
-import {
-  Card,
-  InputLabel,
-  MenuItem,
-  FormControl,
-  Select,
-  OutlinedInput,
-} from "@mui/material";
-import { TextField, Grid } from "@mui/material";
+import { Card, InputLabel, MenuItem, FormControl } from "@mui/material";
+import { TextField, OutlinedInput, Grid, Select } from "@mui/material";
 import { getRegions } from "../requests/getRegions";
 import { getInsByReg } from "../requests/getInstByReg";
+import { postStudent } from "../requests/postStudent";
 
 const SendForm = ({
   studentName,
@@ -18,6 +12,9 @@ const SendForm = ({
   setSelectedRegion,
   selectedInst,
   setSelectedInst,
+  code,
+  pass,
+  setSent,
 }) => {
   const [regions, setRegions] = useState([]);
   const [instructors, setInstructors] = useState([]);
@@ -33,7 +30,6 @@ const SendForm = ({
   useEffect(() => {
     const fetchInstructors = async () => {
       if (selectedRegion) {
-        console.log("Selected region:", selectedRegion);
         const data = await getInsByReg({ regionId: selectedRegion });
         setInstructors(data);
       }
@@ -43,7 +39,19 @@ const SendForm = ({
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+
+    const data = await postStudent({
+      studentName,
+      selectedInst,
+      code,
+      pass,
+    });
+    console.log(data);
+    console.log("sent change(form)");
+
+    setSent(true);
   };
+
   return (
     <Card sx={{ minWidth: 60, width: "600px" }}>
       <form onSubmit={handleSubmit}>
