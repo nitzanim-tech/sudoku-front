@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { generateSudoku } from "../util/generateSudoku";
 import { crossImg, verImg } from "../assets/img";
 import { runScript } from "../requests/runScript";
-import { Card, CardContent } from "@mui/material";
+import { Card, CardContent, CircularProgress } from "@mui/material";
 import { Sudoku, CheckedSudoku, SendForm } from "../components";
 import { useNavigate } from "react-router-dom";
 
@@ -22,6 +22,8 @@ function Check() {
   const [selectedRegion, setSelectedRegion] = useState("");
   const [selectedInst, setSelectedInst] = useState("");
   const [sent, setSent] = useState(false);
+  const [loading, setLoading] = useState(false);
+
   const navigate = useNavigate();
 
   const pass = isValid.every((value) => value === true);
@@ -39,6 +41,7 @@ function Check() {
 
   useEffect(() => {
     async function fetchData() {
+      setLoading(true);
       const outputs = await Promise.all(
         sudokusRef.current.map((sudoku) =>
           runScript({
@@ -48,6 +51,7 @@ function Check() {
         )
       );
       setOutputs(outputs);
+      setLoading(false);
     }
     fetchData();
   }, []);
@@ -64,44 +68,48 @@ function Check() {
       <div className="grid">
         {sudokusRef.current.map((sudoku, index) => (
           <Card key={index} className="card">
-            <CardContent>
-              <div className="flex">
-                {outputs[index] === null ? (
-                  <div className="margin">
-                    <h2>פלט שגוי</h2>
-                  </div>
-                ) : (
-                  outputs[index].length > 0 && (
+            {loading ? (
+              <CircularProgress />
+            ) : (
+              <CardContent>
+                <div className="flex">
+                  {outputs[index] === null ? (
                     <div className="margin">
-                      <p className="gray">פלט</p>
-                      <CheckedSudoku
-                        studentAns={outputs[index]}
-                        sudoku={sudoku}
-                        onValidityChange={(valid) => {
-                          setIsValid((prevIsValid) => {
-                            const newIsValid = [...prevIsValid];
-                            newIsValid[index] = valid;
-                            return newIsValid;
-                          });
-                        }}
-                      />
+                      <h2>פלט שגוי</h2>
                     </div>
-                  )
-                )}
+                  ) : (
+                    outputs[index].length > 0 && (
+                      <div className="margin">
+                        <p className="gray">פלט</p>
+                        <CheckedSudoku
+                          studentAns={outputs[index]}
+                          sudoku={sudoku}
+                          onValidityChange={(valid) => {
+                            setIsValid((prevIsValid) => {
+                              const newIsValid = [...prevIsValid];
+                              newIsValid[index] = valid;
+                              return newIsValid;
+                            });
+                          }}
+                        />
+                      </div>
+                    )
+                  )}
 
-                <div className="margin">
-                  <p className="gray">טסט</p>
-                  <Sudoku board={sudoku} />
-                </div>
+                  <div className="margin">
+                    <p className="gray">טסט</p>
+                    <Sudoku board={sudoku} />
+                  </div>
 
-                <div className="margin">
-                  <img
-                    src={isValid[index] ? verImg : crossImg}
-                    className="feedback-image"
-                  />
+                  <div className="margin">
+                    <img
+                      src={isValid[index] ? verImg : crossImg}
+                      className="feedback-image"
+                    />
+                  </div>
                 </div>
-              </div>
-            </CardContent>
+              </CardContent>
+            )}
           </Card>
         ))}
       </div>

@@ -1,7 +1,5 @@
 async function postStudent({ studentName, selectedInst, pass }) {
   const code = localStorage.getItem("code") || "print('empty')";
-
-  console.log(code);
   try {
     const response = await fetch("http://localhost:3000/student/add", {
       method: "POST",

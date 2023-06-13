@@ -46,17 +46,14 @@ const SendForm = ({
       code,
       pass,
     });
-    console.log(data);
-    console.log("sent change(form)");
-
     setSent(true);
   };
 
   return (
-    <Card sx={{ minWidth: 60, width: "600px" }}>
+    <Card sx={{ width: "680px" }}>
       <form onSubmit={handleSubmit}>
-        <Grid container spacing={2}>
-          <Grid item xs={3}>
+        <Grid container spacing={2} style={{ alignItems: "center" }}>
+          <Grid item xs={2}>
             <div style={{ display: "flex", justifyContent: "center" }}>
               <button
                 type="submit"
@@ -85,6 +82,7 @@ const SendForm = ({
               <Select
                 labelId="inst-label"
                 id="inst-select"
+                value={selectedInst || ""}
                 onChange={(e) => setSelectedInst(e.target.value)}
                 input={<OutlinedInput label="מדריך" id="inst-label" />}
               >
@@ -97,12 +95,13 @@ const SendForm = ({
             </FormControl>
           </Grid>
 
-          <Grid item xs={3}>
+          <Grid item xs={3} style={{ marginRight: "1px" }}>
             <FormControl fullWidth variant="outlined" sx={{ mt: 1 }}>
               <InputLabel htmlFor="region-select">אזור</InputLabel>
               <Select
                 labelId="region-label"
                 id="region-select"
+                value={selectedRegion || ""}
                 onChange={(e) => setSelectedRegion(e.target.value)}
                 input={<OutlinedInput label="אזור" id="region-select" />}
               >

@@ -3,6 +3,7 @@ import Home from "./pages/Home";
 import Sumbit from "./pages/Sumbit";
 import Check from "./pages/Check";
 import SumbitSent from "./pages/SumbitSent";
+import Instructors from "./pages/Instructors";
 import "./App.css";
 
 function App() {
@@ -13,6 +14,7 @@ function App() {
         <Route path="/submit" element={<Sumbit />} />
         <Route path="/check" element={<Check />} />
         <Route path="/sent" element={<SumbitSent />} />
+        <Route path="/inst" element={<Instructors />} />
       </Routes>
     </BrowserRouter>
   );
