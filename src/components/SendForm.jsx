@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Card, InputLabel, MenuItem, FormControl } from "@mui/material";
 import { TextField, OutlinedInput, Grid, Select } from "@mui/material";
-import { getRegions } from "../requests/getRegions";
-import { getInsByReg } from "../requests/getInstByReg";
 import { postStudent } from "../requests/postStudent";
+import SelectInst from "./SelectInst";
 
 const SendForm = ({
   studentName,
@@ -12,34 +11,12 @@ const SendForm = ({
   setSelectedRegion,
   selectedInst,
   setSelectedInst,
-  code,
   pass,
   setSent,
 }) => {
-  const [regions, setRegions] = useState([]);
-  const [instructors, setInstructors] = useState([]);
-
-  useEffect(() => {
-    const fetchRegions = async () => {
-      const data = await getRegions();
-      setRegions(data);
-    };
-    fetchRegions();
-  }, []);
-
-  useEffect(() => {
-    const fetchInstructors = async () => {
-      if (selectedRegion) {
-        const data = await getInsByReg({ regionId: selectedRegion });
-        setInstructors(data);
-      }
-    };
-    fetchInstructors();
-  }, [selectedRegion]);
-
   const handleSubmit = async (event) => {
     event.preventDefault();
-
+    const code = localStorage.getItem("code") || "print('empty')";
     const data = await postStudent({
       studentName,
       selectedInst,
@@ -76,46 +53,16 @@ const SendForm = ({
             </FormControl>
           </Grid>
 
-          <Grid item xs={3}>
-            <FormControl fullWidth variant="outlined" sx={{ mt: 1 }}>
-              <InputLabel htmlFor="inst-select">מדריך</InputLabel>
-              <Select
-                labelId="inst-label"
-                id="inst-select"
-                value={selectedInst || ""}
-                onChange={(e) => setSelectedInst(e.target.value)}
-                input={<OutlinedInput label="מדריך" id="inst-label" />}
-              >
-                {instructors.map((instructor) => (
-                  <MenuItem key={instructor.id} value={instructor.id}>
-                    {instructor.name}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
-          </Grid>
-
-          <Grid item xs={3} style={{ marginRight: "1px" }}>
-            <FormControl fullWidth variant="outlined" sx={{ mt: 1 }}>
-              <InputLabel htmlFor="region-select">אזור</InputLabel>
-              <Select
-                labelId="region-label"
-                id="region-select"
-                value={selectedRegion || ""}
-                onChange={(e) => setSelectedRegion(e.target.value)}
-                input={<OutlinedInput label="אזור" id="region-select" />}
-              >
-                {regions.map((region) => (
-                  <MenuItem key={region.id} value={region.id}>
-                    {region.name}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
-          </Grid>
+          <SelectInst
+            selectedRegion={selectedRegion}
+            setSelectedRegion={setSelectedRegion}
+            selectedInst={selectedInst}
+            setSelectedInst={setSelectedInst}
+          />
         </Grid>
       </form>
     </Card>
   );
 };
+
 export default SendForm;

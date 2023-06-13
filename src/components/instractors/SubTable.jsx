@@ -2,6 +2,7 @@ import DescriptionIcon from "@mui/icons-material/Description";
 import { IconButton, TableBody, TableCell } from "@mui/material";
 import { Table, TableHead, TableRow } from "@mui/material";
 import { formatDate } from "../../util/formatDate";
+
 function SubTable(props) {
   const { row, handleDownload } = props;
 
@@ -9,21 +10,15 @@ function SubTable(props) {
     <Table size="small" aria-label="purchases">
       <TableHead>
         <TableRow>
-          <TableCell>תאריך</TableCell>
-          <TableCell>עבר</TableCell>
-          <TableCell>קובץ</TableCell>
+          <TableCell style={{ textAlign: "center" }}>קובץ</TableCell>
+          <TableCell style={{ textAlign: "center" }}>עבר</TableCell>
+          <TableCell style={{ textAlign: "center" }}>תאריך</TableCell>
         </TableRow>
       </TableHead>
 
       <TableBody>
         {row.sumbits.map((submission) => (
           <TableRow key={submission.date}>
-            <TableCell component="th" scope="row">
-              {formatDate(submission.date)}
-            </TableCell>
-
-            <TableCell>{submission.pass ? "Yes" : "No"}</TableCell>
-
             <TableCell align="right">
               <IconButton
                 onClick={() => {
@@ -32,6 +27,10 @@ function SubTable(props) {
               >
                 <DescriptionIcon />
               </IconButton>
+            </TableCell>
+            <TableCell>{submission.pass ? "עבר" : "לא עבר"}</TableCell>
+            <TableCell component="th" scope="row">
+              {formatDate(submission.date)}
             </TableCell>
           </TableRow>
         ))}

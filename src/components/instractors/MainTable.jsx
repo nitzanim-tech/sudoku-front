@@ -4,10 +4,17 @@ import ExpandLessIcon from "@mui/icons-material/ExpandLess";
 import { IconButton, Collapse, TableRow, TableCell } from "@mui/material";
 import SubTable from "./SubTable";
 import { useState } from "react";
+import { formatDate } from "../../util/formatDate";
 
 function MainTable(props) {
   const { row, handleDownload } = props;
   const [open, setOpen] = useState(false);
+  const hasPassed = row.sumbits.some((submission) => submission.pass);
+  const latestSubmissionDate = row.sumbits.reduce(
+    (maxDate, submission) =>
+      new Date(submission.date) > new Date(maxDate) ? submission.date : maxDate,
+    row.sumbits[0].date
+  );
 
   return (
     <>
@@ -21,11 +28,9 @@ function MainTable(props) {
             {open ? <ExpandLessIcon /> : <ExpandMoreIcon />}
           </IconButton>
         </TableCell>
-        <TableCell component="th" scope="row">
-          {row.id}
-        </TableCell>
-        <TableCell>{row.name}</TableCell>
-        <TableCell>{row.instructor.name}</TableCell>
+
+        <TableCell>{formatDate(latestSubmissionDate)}</TableCell>
+
         <TableCell>
           <IconButton
             onClick={() => handleDownload(row.sumbits[0].code, row.name)}
@@ -33,6 +38,10 @@ function MainTable(props) {
             <DescriptionIcon />
           </IconButton>
         </TableCell>
+
+        <TableCell>{hasPassed ? "עבר" : "לא עבר"}</TableCell>
+
+        <TableCell>{row.name}</TableCell>
       </TableRow>
 
       <TableRow>

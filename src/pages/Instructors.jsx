@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { TableBody, TableCell, TableContainer } from "@mui/material";
 import { Table, TableHead, TableRow, Paper } from "@mui/material";
 import MainTable from "../components/instractors/MainTable";
+import SelectInst from "../components/SelectInst";
 
 function Instructors() {
   const [students, setStudents] = useState([]);
@@ -32,28 +33,31 @@ function Instructors() {
   };
 
   return (
-    <TableContainer component={Paper}>
-      <Table aria-label="collapsible table">
-        <TableHead>
-          <TableRow>
-            <TableCell />
-            <TableCell>ID</TableCell>
-            <TableCell>שם</TableCell>
-            <TableCell>מדריך</TableCell>
-            <TableCell>קובץ אחרון</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {students.map((student) => (
-            <MainTable
-              key={student.id}
-              row={student}
-              handleDownload={handleDownload}
-            />
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
+    <>
+      <SelectInst />
+      <TableContainer component={Paper}>
+        <Table aria-label="collapsible table">
+          <TableHead>
+            <TableRow>
+              <TableCell />
+              <TableCell>הגשה אחרונה</TableCell>
+              <TableCell>קובץ אחרון</TableCell>
+              <TableCell>טסטים</TableCell>
+              <TableCell>שם</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {students.map((student) => (
+              <MainTable
+                key={student.id}
+                row={student}
+                handleDownload={handleDownload}
+              />
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </>
   );
 }
 
