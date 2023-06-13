@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { Card, InputLabel, MenuItem, FormControl } from "@mui/material";
-import { TextField, OutlinedInput, Grid, Select } from "@mui/material";
+import React, { useState } from "react";
+import { Card, FormControl, Grid, TextField } from "@mui/material";
 import { postStudent } from "../requests/postStudent";
 import SelectInst from "./SelectInst";
 
@@ -14,16 +13,26 @@ const SendForm = ({
   pass,
   setSent,
 }) => {
+  const [errorMessage, setErrorMessage] = useState("");
+  const [noNameMassage, setNoNameMassage] = useState("");
+
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const code = localStorage.getItem("code") || "print('empty')";
-    const data = await postStudent({
+    if (!studentName) {
+      setNoNameMassage("יש לכתוב שם");
+      return;
+    }
+
+    const success = await postStudent({
       studentName,
       selectedInst,
-      code,
       pass,
     });
-    setSent(true);
+    if (!success) {
+      setErrorMessage("An error occurred while submitting the form.");
+    } else {
+      setSent(true);
+    }
   };
 
   return (
@@ -48,19 +57,24 @@ const SendForm = ({
                 label="שם"
                 type="search"
                 value={studentName}
+                error={noNameMassage}
+                helperText={noNameMassage}
                 onChange={(e) => setStudentName(e.target.value)}
               />
             </FormControl>
           </Grid>
 
-          <SelectInst
-            selectedRegion={selectedRegion}
-            setSelectedRegion={setSelectedRegion}
-            selectedInst={selectedInst}
-            setSelectedInst={setSelectedInst}
-          />
+          <Grid item xs={7}>
+            <SelectInst
+              selectedRegion={selectedRegion}
+              setSelectedRegion={setSelectedRegion}
+              selectedInst={selectedInst}
+              setSelectedInst={setSelectedInst}
+            />
+          </Grid>
         </Grid>
       </form>
+      {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
     </Card>
   );
 };

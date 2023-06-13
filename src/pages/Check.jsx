@@ -65,57 +65,59 @@ function Check() {
 
   return (
     <div className="container">
-      <div className="grid">
-        {sudokusRef.current.map((sudoku, index) => (
-          <Card key={index} className="card">
-            {loading ? (
-              <CircularProgress />
-            ) : (
-              <CardContent>
-                <div className="flex">
-                  {outputs[index] === null ? (
-                    <div className="margin">
-                      <h2>פלט שגוי</h2>
-                    </div>
-                  ) : (
-                    outputs[index].length > 0 && (
-                      <div className="margin">
-                        <p className="gray">פלט</p>
-                        <CheckedSudoku
-                          studentAns={outputs[index]}
-                          sudoku={sudoku}
-                          onValidityChange={(valid) => {
-                            setIsValid((prevIsValid) => {
-                              const newIsValid = [...prevIsValid];
-                              newIsValid[index] = valid;
-                              return newIsValid;
-                            });
-                          }}
-                        />
+      <div style={{ width: "70%" }}>
+        <div className="grid">
+          {sudokusRef.current.map((sudoku, index) => (
+            <Card key={index} className="card">
+              {loading ? (
+                <CircularProgress />
+              ) : (
+                <CardContent>
+                  <div className="flex">
+                    {outputs[index] === null ? (
+                      <div style={{ width: "190px" }}>
+                        <h2>פלט שגוי</h2>
                       </div>
-                    )
-                  )}
+                    ) : (
+                      outputs[index].length > 0 && (
+                        <div className="margin">
+                          <p className="gray">פלט</p>
+                          <CheckedSudoku
+                            studentAns={outputs[index]}
+                            sudoku={sudoku}
+                            onValidityChange={(valid) => {
+                              setIsValid((prevIsValid) => {
+                                const newIsValid = [...prevIsValid];
+                                newIsValid[index] = valid;
+                                return newIsValid;
+                              });
+                            }}
+                          />
+                        </div>
+                      )
+                    )}
 
-                  <div className="margin">
-                    <p className="gray">טסט</p>
-                    <Sudoku board={sudoku} />
+                    <div className="margin">
+                      <p className="gray">טסט</p>
+                      <Sudoku board={sudoku} />
+                    </div>
+
+                    <div className="margin">
+                      <img
+                        src={isValid[index] ? verImg : crossImg}
+                        className="feedback-image"
+                      />
+                    </div>
                   </div>
+                </CardContent>
+              )}
+            </Card>
+          ))}
+        </div>
 
-                  <div className="margin">
-                    <img
-                      src={isValid[index] ? verImg : crossImg}
-                      className="feedback-image"
-                    />
-                  </div>
-                </div>
-              </CardContent>
-            )}
-          </Card>
-        ))}
-      </div>
-
-      <div className="center">
-        <SendForm {...formProps} />
+        <div className="center">
+          <SendForm {...formProps} />
+        </div>
       </div>
     </div>
   );

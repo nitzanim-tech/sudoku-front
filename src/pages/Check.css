@@ -7,11 +7,13 @@
   margin-left: -50vw;
   margin-top: -3vw;
   margin-right: -50vw;
+  display: flex;
+  justify-content: center;
 }
 
 .card {
-  max-width: 420px;
-  height: 200px;
+  width: 420px;
+  height: 230px;
   margin-bottom: 1vw;
 }
 
@@ -22,9 +24,6 @@
   justify-items: center;
 }
 
-.card {
-  max-width: 420px;
-}
 
 .flex {
   display: flex;

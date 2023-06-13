@@ -33,7 +33,7 @@ const SelectInst = ({
 
   return (
     <Grid container spacing={2} style={{ alignItems: "center" }}>
-      <Grid item xs={3}>
+      <Grid item xs={6}>
         <FormControl fullWidth variant="outlined" sx={{ mt: 1 }}>
           <InputLabel htmlFor="inst-select">מדריך</InputLabel>
           <Select
@@ -52,7 +52,7 @@ const SelectInst = ({
         </FormControl>
       </Grid>
 
-      <Grid item xs={3} style={{ marginRight: "1px" }}>
+      <Grid item xs={6}>
         <FormControl fullWidth variant="outlined" sx={{ mt: 1 }}>
           <InputLabel htmlFor="region-select">אזור</InputLabel>
           <Select

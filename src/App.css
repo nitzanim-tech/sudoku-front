@@ -5,69 +5,8 @@
   text-align: center;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
-}
-
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
-}
-
-.card {
-  padding: 2em;
-}
-
-.read-the-docs {
-  color: #888;
-}
 
 
-
-/* Add this CSS to your stylesheet*/
-/*
-.sudoku-table {
-  border-collapse: collapse;
-  border: 1px solid black;
-}
-
-.sudoku-table td {
-  width: 2em;
-  height: 2em;
-  text-align: center;
-  border: 1px solid #ddd;
-}
-
-.sudoku-table tr:nth-child(even) td,
-.sudoku-table tr td:nth-child(even) {
-  border-color: black;
-}
-
-.sudoku-table tr:nth-child(odd) td,
-.sudoku-table tr td:nth-child(odd) {
-  border-color: #ddd;
-}
-
-*/
 .sudoku-table {
   border-collapse: collapse;
 }
