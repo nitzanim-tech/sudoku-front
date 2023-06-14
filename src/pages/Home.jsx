@@ -10,17 +10,18 @@ function Home() {
   const [students, setStudents] = useState("");
   const [open, setOpen] = useState(false);
 
-  useEffect(() => {
-    const fetchStudents = async () => {
-      const data = await getStudentPass();
-      const formattedData = data.map((student) => ({
-        ...student,
-        date: formatDate(student.date),
-      }));
-      setStudents(formattedData);
-    };
-    fetchStudents();
-  }, []);
+useEffect(() => {
+  const fetchStudents = async () => {
+    const data = await getStudentPass();
+    const sortedData = data.sort((a, b) => new Date(a.date) - new Date(b.date));
+    const formattedData = sortedData.map((student) => ({
+      ...student,
+      date: formatDate(student.date),
+    }));
+    setStudents(formattedData);
+  };
+  fetchStudents();
+}, []);
 
   const handleClickOpen = () => {
     setOpen(true);

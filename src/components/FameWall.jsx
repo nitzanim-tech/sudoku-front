@@ -3,6 +3,8 @@ import StudentCard from "./StudentCard";
 import { Box, Grid } from "@mui/material";
 
 const FameWall = ({ students }) => {
+  const numColumns = 5;
+
   return (
     <Box
       sx={{
@@ -26,24 +28,36 @@ const FameWall = ({ students }) => {
             columnSpacing={{ xs: 1, sm: 2, md: 3 }}
           >
             <Grid item xs={6}>
-              <StudentCard place={2} student={students[1]} />
+              <StudentCard place={3} student={students[2]} />
             </Grid>
             <Grid item xs={6}>
-              <StudentCard place={3} student={students[2]} />
+              <StudentCard place={2} student={students[1]} />
             </Grid>
           </Grid>
         </Box>
       )}
 
       {students.length > 3 && (
-        <Box sx={{ margin: 3, width: "600px" }}>
-          <Grid rowSpacing={2} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
-            {students.slice(3).map((student, index) => (
-              <Grid item xs={12} key={index}>
-                <StudentCard place={index + 4} student={student} />
-              </Grid>
-            ))}
-          </Grid>
+        <Box sx={{ margin: 3, width: "1000px" }}>
+          <Box sx={{ direction: "rtl" }}>
+            <Grid
+              container
+              rowSpacing={2}
+              columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+            >
+              {students.slice(3).map((student, index) => {
+                const place =
+                  Math.floor(index / numColumns) * numColumns +
+                  (numColumns - 1 - (index % numColumns)) +
+                  4;
+                return (
+                  <Grid item xs={12 / numColumns} key={index}>
+                    <StudentCard place={place} student={student} />
+                  </Grid>
+                );
+              })}
+            </Grid>
+          </Box>
         </Box>
       )}
     </Box>

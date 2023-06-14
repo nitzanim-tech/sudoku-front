@@ -1,5 +1,4 @@
-const generateSudoku = (missing) => {
-  const side = 4;
+const generateSudoku = (side, missing) => {
   const board = Array(side)
     .fill()
     .map(() => Array(side).fill(null));
