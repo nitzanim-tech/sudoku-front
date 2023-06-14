@@ -2,7 +2,9 @@ const generateSudoku = (side, missing) => {
   const board = Array(side)
     .fill()
     .map(() => Array(side).fill(null));
-  const pattern = (r, c) => (2 * (r % 2) + Math.floor(r / 2) + c) % side;
+  const base = Math.sqrt(side);
+  const pattern = (r, c) =>
+    (base * (r % base) + Math.floor(r / base) + c) % side;
 
   const nums = shuffle(Array.from({ length: side }, (_, i) => i + 1));
   for (let r = 0; r < side; r++) {

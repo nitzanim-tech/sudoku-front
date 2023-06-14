@@ -8,6 +8,7 @@ async function runScript({ script, input }) {
 
     if (response.ok) {
       let data = await response.json();
+      console.log(data);
       return JSON.parse(data.output);
     } else {
       return null;

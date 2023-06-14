@@ -1,7 +1,7 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Home from "./pages/Home";
 import Sumbit from "./pages/Sumbit";
-import Check from "./pages/Check";
+import Check from "./pages/CheckNEW";
 import SumbitSent from "./pages/SumbitSent";
 import Instructors from "./pages/Instructors";
 import "./App.css";

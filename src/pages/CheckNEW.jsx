@@ -5,17 +5,40 @@ import { runScript } from "../requests/runScript";
 import { Card, CardContent, CircularProgress } from "@mui/material";
 import { Sudoku, CheckedSudoku, SendForm } from "../components";
 import { useNavigate } from "react-router-dom";
+//import "./css/BigSuduku.css";
 
-import "./Check.css";
+function importCSS(side) {
+  let cssFile;
+  if (side === 9) {
+    console.log("in side=9");
+    cssFile = "/css/BigSuduku.css";
+  } else {
+    cssFile = "/css/SmallSuduku.css";
+  }
+  const link = document.createElement("link");
+  link.rel = "stylesheet";
+  link.href = cssFile;
+  document.head.appendChild(link);
+}
 
 function Check({ side = 4 }) {
   const code = localStorage.getItem("code") || "";
-  const sudokusRef = useRef([
-    generateSudoku(side, 3),
-    generateSudoku(side, 1),
-    generateSudoku(side, 7),
-    generateSudoku(side, 5),
-  ]);
+  const sudokusRef = useRef(
+    side === 4
+      ? [
+          generateSudoku(side, 2),
+          generateSudoku(side, 1),
+          generateSudoku(side, 5),
+          generateSudoku(side, 3),
+        ]
+      : [
+          generateSudoku(side, 10),
+          generateSudoku(side, 1),
+          generateSudoku(side, 20),
+          generateSudoku(side, 40),
+        ]
+  );
+
   const [outputs, setOutputs] = useState([[], [], [], []]);
   const [isValid, setIsValid] = useState([false, false, false, false]);
   const [studentName, setStudentName] = useState("");
@@ -25,9 +48,7 @@ function Check({ side = 4 }) {
   const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
-
   const pass = isValid.every((value) => value === true);
-
   const formProps = {
     studentName,
     setStudentName,
@@ -38,6 +59,11 @@ function Check({ side = 4 }) {
     pass,
     setSent,
   };
+
+  useEffect(() => {
+    console.log("importCSS called with side:", side);
+    importCSS(side);
+  }, [side]);
 
   useEffect(() => {
     async function fetchData() {
