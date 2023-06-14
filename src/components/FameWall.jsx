@@ -25,10 +25,10 @@ const FameWall = ({ students }) => {
             rowSpacing={1}
             columnSpacing={{ xs: 1, sm: 2, md: 3 }}
           >
-            <Grid xs={6}>
+            <Grid item xs={6}>
               <StudentCard place={2} student={students[1]} />
             </Grid>
-            <Grid xs={6}>
+            <Grid item xs={6}>
               <StudentCard place={3} student={students[2]} />
             </Grid>
           </Grid>
@@ -39,7 +39,7 @@ const FameWall = ({ students }) => {
         <Box sx={{ margin: 3, width: "600px" }}>
           <Grid rowSpacing={2} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
             {students.slice(3).map((student, index) => (
-              <Grid xs={12} key={index}>
+              <Grid item xs={12} key={index}>
                 <StudentCard place={index + 4} student={student} />
               </Grid>
             ))}

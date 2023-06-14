@@ -1,30 +1,46 @@
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import logoImg from "../assets/img/logo.png";
-import FameWall from "../components/FameWall";
+import { getStudentPass } from "../requests/getStdntsPass";
+import { formatDate } from "../util/formatDate";
+import { ConfirmationDialog, FameWall, Guidelines } from "../components";
 
-import { students } from "../util/exampleJsons";
 function Home() {
   const navigateTo = useNavigate();
+  const [students, setStudents] = useState("");
+  const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    const fetchStudents = async () => {
+      const data = await getStudentPass();
+      const formattedData = data.map((student) => ({
+        ...student,
+        date: formatDate(student.date),
+      }));
+      setStudents(formattedData);
+    };
+    fetchStudents();
+  }, []);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const handleAgree = () => {
+    navigateTo("/submit");
+  };
 
   return (
     <>
       <img src={logoImg}></img>
-      <h2>הנחיות הגשה</h2>
-      <p>
-        אדון וגברת דַרְסְלִי, דיירי דרך פְּרִיוֶוט מספר ארבע, ידעו לדווח בגאווה
-        שהם נורמליים לגמרי ותודה ששאלתם. לא יעלה על הדעת כי מכל האנשים בעולם
-        דווקא הם יסתבכו בפרשיות מוזרות או מסתוריות, והרי הם פשוט לא סובלים
-        שטויות מסוג זה. מר דַרסְלי היה מנכ"ל של חברה בשם גְרַאנִינְגְס לייצור
-        מקדחות. הוא היה איש גדל-ממדים, בשרני, וכמעט נטול צוואר למרות שדווקא היה
-        לו שפם שמן למדי. גברת דַרסְלי היתה רזה ובלונדינית, ולה היה צוואר ארוך
-        פי-שניים מהאורך המקובל, מה שהיה שימושי מאוד, כי רוב זמנה עבר עליה בהצצה
-        מעל גדרות כדי לרגל אחר השכנים שלה. לַדַרסְלים היה תינוק ששמו דַאדְלִי,
-        ובעיניהם לא היה בעולם ילד מוצלח ממנו.
-      </p>
-
+      <Guidelines />
       <button
         style={{ backgroundColor: "#008AD1", color: "white" }}
-        onClick={() => navigateTo("/submit")}
+        onClick={handleClickOpen}
       >
         להגשה
       </button>
@@ -42,6 +58,11 @@ function Home() {
         <h2 style={{ color: "white" }}>קיר התהילה</h2>
         <FameWall students={students} />
       </div>
+      <ConfirmationDialog
+        open={open}
+        onClose={handleClose}
+        onAgree={handleAgree}
+      />
     </>
   );
 }

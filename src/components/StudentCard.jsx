@@ -71,7 +71,7 @@ const StudentCard = ({ place = 0, student }) => {
           justifyContent="flex-end"
           sx={{ px: 2, py: 1, bgcolor: "background.default" }}
         >
-          <Chip label={student.region} />
+          <Chip label={student.city} />
         </Stack>
       </Card>
     </div>
