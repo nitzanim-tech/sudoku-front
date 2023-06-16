@@ -1,6 +1,7 @@
-export { default as Sudoku } from "./Suduku";
-export { default as CheckedSudoku } from "./CheckedSudoku";
+export { default as Sudoku } from "./checkPage/Suduku";
+export { default as CheckedSudoku } from "./checkPage/CheckedSudoku";
 export { default as SendForm } from "./SendForm";
-export { default as ConfirmationDialog } from "./ConfirmationDialog";
+export { default as ConfirmationDialog } from "./homePage/ConfirmationDialog";
 export { default as FameWall } from "./FameWall";
-export { default as Guidelines } from "./Guidelines";
+export { default as Guidelines } from "./homePage/Guidelines";
+export { default as TestCard } from "./checkPage/TestCard";
