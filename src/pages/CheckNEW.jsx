@@ -16,9 +16,16 @@ function importCSS(side) {
   link.rel = "stylesheet";
   link.href = cssFile;
   document.head.appendChild(link);
+
+  return () => {
+    if (document.head.contains(link)) {
+      document.head.removeChild(link);
+    }
+  };
 }
 
-function Check({ side = 9 }) {
+function Check() {
+  const side = parseInt(localStorage.getItem("task")) || 4;
   const code = localStorage.getItem("code") || "";
   const sudokusRef = useRef(
     side === 4
@@ -58,8 +65,10 @@ function Check({ side = 9 }) {
   };
 
   useEffect(() => {
-    console.log("importCSS called with side:", side);
-    importCSS(side);
+    const removeCSS = importCSS(side);
+    return () => {
+      removeCSS();
+    };
   }, [side]);
 
   useEffect(() => {
@@ -80,7 +89,6 @@ function Check({ side = 9 }) {
   }, []);
 
   useEffect(() => {
-    console.log("sent change(check)");
     if (sent) {
       navigate("/sent");
     }

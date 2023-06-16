@@ -5,13 +5,16 @@ import "ace-builds/src-noconflict/mode-python";
 import "ace-builds/src-noconflict/theme-chrome";
 import { examplecode } from "../util/exampleCode";
 import logoImg from "../assets/img/logo.png";
+import { OutlinedInput, InputLabel, Select, MenuItem } from "@mui/material";
 
 function Submit() {
   const [code, setCode] = useState(localStorage.getItem("code") || examplecode);
+  const [selectedTask, setSelectedTask] = useState(null);
   const navigate = useNavigate();
 
   const handleSubmit = () => {
     localStorage.setItem("code", code);
+    localStorage.setItem("task", selectedTask);
     navigate("/check");
   };
 
@@ -30,6 +33,23 @@ function Submit() {
         >
           בדוק
         </button>
+
+        <InputLabel htmlFor="task-select">כתבתי</InputLabel>
+        <Select
+          labelId="task-label"
+          id="task-select"
+          value={selectedTask || ""}
+          onChange={(e) => setSelectedTask(e.target.value)}
+          input={<OutlinedInput label="כתבתי" id="task-select" />}
+        >
+          <MenuItem key={4} value={4}>
+            משימה - סודוקו 4X4
+          </MenuItem>
+          <MenuItem key={9} value={9}>
+            אתגר - סודוקו 9X9
+          </MenuItem>
+        </Select>
+
         <img src={logoImg} alt="Logo" />
       </div>
       <div

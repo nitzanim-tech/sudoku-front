@@ -5,9 +5,9 @@ import { DialogContentText } from "@mui/material";
 const ConfirmationDialog = ({ open, onClose, onAgree }) => {
   return (
     <Dialog open={open} onClose={onClose}>
-      <DialogTitle>הצהרה</DialogTitle>
+      <DialogTitle dir="rtl">הצהרה</DialogTitle>
       <DialogContent>
-        <DialogContentText>
+        <DialogContentText dir="rtl">
           הִנְני נשבּע וּמתחייב בְּהן צִדקי לשמור אֱמוּנים לִמדינת ישראל לחוקֶיה
           וּלשלטונותֶיה המוסמכים לקבל על עצמי ללא תנאי וּללא סְיָיג עוֹל מִשמעתו
           של צְבא הַהֲגנה לישראל לציית לכֿל הפקודות וההוראות הניתנות על ידי
@@ -15,8 +15,7 @@ const ConfirmationDialog = ({ open, onClose, onAgree }) => {
           המולדת וּלחירות ישראל
         </DialogContentText>
       </DialogContent>
-      <DialogActions>
-        <Button onClick={onClose}>Disagree</Button>
+      <DialogActions style={{ justifyContent: "center" }}>
         <Button onClick={onAgree}>אני נשבע</Button>
       </DialogActions>
     </Dialog>
