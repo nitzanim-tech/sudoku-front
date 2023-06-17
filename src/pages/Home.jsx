@@ -7,21 +7,30 @@ import { ConfirmationDialog, FameWall, Guidelines } from "../components";
 
 function Home() {
   const navigateTo = useNavigate();
-  const [students, setStudents] = useState("");
+  const [students, setStudents] = useState([]);
   const [open, setOpen] = useState(false);
+  const [challengeStudents, setChallengeStudents] = useState([]);
 
-useEffect(() => {
-  const fetchStudents = async () => {
-    const data = await getStudentPass();
+  const fetchAndFormatStudents = async (task) => {
+    const data = await getStudentPass(task);
     const sortedData = data.sort((a, b) => new Date(a.date) - new Date(b.date));
     const formattedData = sortedData.map((student) => ({
       ...student,
       date: formatDate(student.date),
     }));
-    setStudents(formattedData);
+    return formattedData;
   };
-  fetchStudents();
-}, []);
+
+  useEffect(() => {
+    const fetchStudents = async () => {
+      const basicData = await fetchAndFormatStudents("basic-sudoku");
+      setStudents(basicData);
+
+      const challengeData = await fetchAndFormatStudents("challenge-sudoku");
+      setChallengeStudents(challengeData);
+    };
+    fetchStudents();
+  }, []);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -40,7 +49,11 @@ useEffect(() => {
       <img src={logoImg}></img>
       <Guidelines />
       <button
-        style={{ backgroundColor: "#008AD1", color: "white" }}
+        style={{
+          backgroundColor: "#008AD1",
+          color: "white",
+          marginBottom: "20px",
+        }}
         onClick={handleClickOpen}
       >
         להגשה
@@ -55,11 +68,28 @@ useEffect(() => {
           right: "50%",
           marginLeft: "-50vw",
           marginRight: "-50vw",
+          paddingTop: "20px",
         }}
       >
-        <h2 style={{ color: "white" }}>קיר התהילה</h2>
-        <FameWall students={students} />
+        <div style={{ display: "flex", justifyContent: "center" }}>
+          <div style={{ marginRight: "20px", flex: "1" }}>
+            <h3 style={{ color: "white" }}>אתגר-לוח גדול</h3>
+            <FameWall students={challengeStudents} />
+          </div>
+          <div
+            style={{
+              backgroundColor: "white",
+              width: "2px",
+              height: "100%",
+            }}
+          />
+          <div style={{ flex: "1" }}>
+            <h3 style={{ color: "white" }}>משימה-לוח קטן</h3>
+            <FameWall students={students} />
+          </div>
+        </div>
       </div>
+
       <ConfirmationDialog
         open={open}
         onClose={handleClose}

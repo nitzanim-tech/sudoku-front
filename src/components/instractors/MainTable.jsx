@@ -7,13 +7,17 @@ import { useState } from "react";
 import { formatDate } from "../../util/formatDate";
 
 function MainTable(props) {
-  const { row, handleDownload } = props;
+  const { row, handleDownload, task } = props;
   const [open, setOpen] = useState(false);
-  const hasPassed = row.sumbits.some((submission) => submission.pass);
-  const latestSubmissionDate = row.sumbits.reduce(
+
+  const submits = row.sumbits.find((submit) => submit.task === task);
+  if (!submits) return null;
+
+  const hasPassed = submits.data.some((submission) => submission.pass);
+  const latestSubmissionDate = submits.data.reduce(
     (maxDate, submission) =>
       new Date(submission.date) > new Date(maxDate) ? submission.date : maxDate,
-    row.sumbits[0].date
+    submits.data[0].date
   );
 
   return (
@@ -47,7 +51,7 @@ function MainTable(props) {
       <TableRow>
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
           <Collapse in={open} timeout="auto" unmountOnExit>
-            <SubTable row={row} handleDownload={handleDownload} />
+            <SubTable submits={submits.data} handleDownload={handleDownload} />
           </Collapse>
         </TableCell>
       </TableRow>

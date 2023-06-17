@@ -1,5 +1,13 @@
 async function postStudent({ studentName, selectedInst, pass }) {
   const code = localStorage.getItem("code") || "print('empty')";
+  const taskValue = parseInt(localStorage.getItem("task"));
+  let task;
+  if (taskValue === 4) {
+    task = "basic-sudoku";
+  } else if (taskValue === 9) {
+    task = "challenge-sudoku";
+  }
+
   try {
     const response = await fetch("http://localhost:3000/student/add", {
       method: "POST",
@@ -11,6 +19,7 @@ async function postStudent({ studentName, selectedInst, pass }) {
         instructor: selectedInst,
         code: code,
         pass: pass,
+        task: task,
       }),
     });
 

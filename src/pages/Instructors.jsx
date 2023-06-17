@@ -14,11 +14,10 @@ function Instructors() {
   useEffect(() => {
     async function fetchData() {
       const response = await fetch(
-        `http://localhost:3000/student/get/${selectedInst}`
+        `http://localhost:3000/student/get?instId=${selectedInst}`
       );
       let data = await response.json();
       data = data.map((student) => ({ ...student, id: student._id }));
-      console.log(data);
       setStudents(data);
     }
     fetchData();
@@ -37,63 +36,69 @@ function Instructors() {
   return (
     <div
       style={{
-        backgroundColor: "#003061",
-        width: "100vw",
-        position: "relative",
-        left: "50%",
-        right: "50%",
-        marginLeft: "-50vw",
-        marginRight: "-50vw",
-        display: "flex",
-        justifyContent: "center",
+        width: "700px",
       }}
     >
-      <div
-        style={{
-          width: "50%",
-        }}
-      >
-        {" "}
-        <img src={logoImg} alt="Logo" />
-        <Card style={{ margin: "20px" }}>
-          <SelectInst
-            selectedRegion={selectedRegion}
-            setSelectedRegion={setSelectedRegion}
-            selectedInst={selectedInst}
-            setSelectedInst={setSelectedInst}
-          />
-        </Card>
-        <TableContainer component={Paper}>
-          <Table aria-label="collapsible table">
-            <TableHead>
-              <TableRow>
-                <TableCell />
-                <TableCell>
-                  <b>הגשה אחרונה</b>
-                </TableCell>
-                <TableCell>
-                  <b>קובץ אחרון</b>
-                </TableCell>
-                <TableCell>
-                  <b>טסטים</b>
-                </TableCell>
-                <TableCell>
-                  <b>שם</b>
-                </TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {students.map((student) => (
-                <MainTable
-                  key={student.id}
-                  row={student}
-                  handleDownload={handleDownload}
-                />
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
-      </div>
+      <img src={logoImg} alt="Logo" />
+      <Card style={{ margin: "20px" }}>
+        <SelectInst
+          selectedRegion={selectedRegion}
+          setSelectedRegion={setSelectedRegion}
+          selectedInst={selectedInst}
+          setSelectedInst={setSelectedInst}
+        />
+      </Card>
+      <TableContainer component={Paper}>
+        <Table aria-label="collapsible table">
+          <TableHead>
+            <TableRow>
+              <TableCell />
+              <TableCell>
+                <b>הגשה אחרונה</b>
+              </TableCell>
+              <TableCell>
+                <b>קובץ אחרון</b>
+              </TableCell>
+              <TableCell>
+                <b>טסטים</b>
+              </TableCell>
+              <TableCell>
+                <b>שם</b>
+              </TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            <tr>
+              <td dir="rtl">
+                <b>משימה</b>
+              </td>
+            </tr>
+            {students.map((student) => (
+              <MainTable
+                key={student.id}
+                row={student}
+                handleDownload={handleDownload}
+                task="basic-sudoku"
+              />
+            ))}
+          </TableBody>
+          <TableBody>
+            <tr>
+              <td dir="rtl">
+                <b>אתגר</b>
+              </td>
+            </tr>
+            {students.map((student) => (
+              <MainTable
+                key={student.id}
+                row={student}
+                handleDownload={handleDownload}
+                task="challenge-sudoku"
+              />
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
     </div>
   );
 }

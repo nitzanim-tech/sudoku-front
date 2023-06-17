@@ -4,8 +4,8 @@ import { Table, TableHead, TableRow } from "@mui/material";
 import { formatDate } from "../../util/formatDate";
 
 function SubTable(props) {
-  const { row, handleDownload } = props;
-
+  const { submits, handleDownload } = props;
+  console.log(submits);
   return (
     <Table size="small" aria-label="purchases">
       <TableHead>
@@ -17,7 +17,7 @@ function SubTable(props) {
       </TableHead>
 
       <TableBody>
-        {row.sumbits.map((submission) => (
+        {submits.map((submission) => (
           <TableRow key={submission.date} align="center">
             <TableCell align="center">
               <IconButton
