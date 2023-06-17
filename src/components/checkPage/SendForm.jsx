@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Card, FormControl, Grid, TextField } from "@mui/material";
-import { postStudent } from "../requests/postStudent";
-import SelectInst from "./SelectInst";
+import { postStudent } from "../../requests/postStudent";
+import SelectInst from "../SelectInst";
 
 const SendForm = ({
   studentName,
@@ -20,6 +20,11 @@ const SendForm = ({
     event.preventDefault();
     if (!studentName) {
       setNoNameMassage("יש לכתוב שם");
+      return;
+    }
+
+    if (!selectedInst) {
+      setErrorMessage("יש לבחור מדריך");
       return;
     }
 

@@ -2,7 +2,7 @@ import React from "react";
 import { useState, useEffect } from "react";
 import { Card, TableBody, TableCell, TableContainer } from "@mui/material";
 import { Table, TableHead, TableRow, Paper } from "@mui/material";
-import MainTable from "../components/instractors/MainTable";
+import MainTable from "../components/instractorsPage/MainTable";
 import SelectInst from "../components/SelectInst";
 import logoImg from "../assets/img/logo.png";
 
