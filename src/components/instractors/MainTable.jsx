@@ -13,50 +13,67 @@ function MainTable(props) {
   const submits = row.sumbits.find((submit) => submit.task === task);
   if (!submits) return null;
 
-  const hasPassed = submits.data.some((submission) => submission.pass);
-  const latestSubmissionDate = submits.data.reduce(
-    (maxDate, submission) =>
-      new Date(submission.date) > new Date(maxDate) ? submission.date : maxDate,
-    submits.data[0].date
+let code;
+if (submits.data.some((submission) => submission.pass)) {
+  const latestPassedSubmission = submits.data
+    .filter((submission) => submission.pass)
+    .reduce(
+      (latest, submission) =>
+        new Date(submission.date) > new Date(latest.date) ? submission : latest,
+      { date: 0 }
+    );
+  code = latestPassedSubmission.code;
+} else {
+  const latestSubmission = submits.data.reduce(
+    (latest, submission) =>
+      new Date(submission.date) > new Date(latest.date) ? submission : latest,
+    { date: 0 }
   );
+  code = latestSubmission.code;
+}
 
-  return (
-    <>
-      <TableRow sx={{ "& > *": { borderBottom: "unset" } }}>
-        <TableCell>
-          <IconButton
-            aria-label="expand row"
-            size="small"
-            onClick={() => setOpen(!open)}
-          >
-            {open ? <ExpandLessIcon /> : <ExpandMoreIcon />}
-          </IconButton>
-        </TableCell>
+const hasPassed = submits.data.some((submission) => submission.pass);
+const latestSubmissionDate = submits.data.reduce(
+  (maxDate, submission) =>
+    new Date(submission.date) > new Date(maxDate) ? submission.date : maxDate,
+  submits.data[0].date
+);
 
-        <TableCell>{formatDate(latestSubmissionDate)}</TableCell>
+return (
+  <>
+    <TableRow sx={{ "& > *": { borderBottom: "unset" } }}>
+      <TableCell>
+        <IconButton
+          aria-label="expand row"
+          size="small"
+          onClick={() => setOpen(!open)}
+        >
+          {open ? <ExpandLessIcon /> : <ExpandMoreIcon />}
+        </IconButton>
+      </TableCell>
 
-        <TableCell>
-          <IconButton
-            onClick={() => handleDownload(row.sumbits[0].code, row.name)}
-          >
-            <DescriptionIcon />
-          </IconButton>
-        </TableCell>
+      <TableCell>{formatDate(latestSubmissionDate)}</TableCell>
 
-        <TableCell>{hasPassed ? "עבר" : "לא עבר"}</TableCell>
+      <TableCell>
+        <IconButton onClick={() => handleDownload(code, row.name)}>
+          <DescriptionIcon />
+        </IconButton>
+      </TableCell>
 
-        <TableCell>{row.name}</TableCell>
-      </TableRow>
+      <TableCell>{hasPassed ? "עבר" : "לא עבר"}</TableCell>
 
-      <TableRow>
-        <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
-          <Collapse in={open} timeout="auto" unmountOnExit>
-            <SubTable submits={submits.data} handleDownload={handleDownload} />
-          </Collapse>
-        </TableCell>
-      </TableRow>
-    </>
-  );
+      <TableCell>{row.name}</TableCell>
+    </TableRow>
+
+    <TableRow>
+      <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
+        <Collapse in={open} timeout="auto" unmountOnExit>
+          <SubTable submits={submits.data} handleDownload={handleDownload} />
+        </Collapse>
+      </TableCell>
+    </TableRow>
+  </>
+);
 }
 
 export default MainTable;

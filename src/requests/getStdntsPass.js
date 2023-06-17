@@ -1,12 +1,14 @@
-async function getStudentPass(task) {
+async function getStudentPass(task, region=null) {
   try {
-    const response = await fetch(
-      `http://localhost:3000/student/getPass?task=${task}`,
-      {
-        method: "GET",
-        headers: { "Content-Type": "application/json" },
-      }
-    );
+    let url = `http://localhost:3000/student/getPass?task=${task}`;
+    if (region) {
+      url += `&region=${region}`;
+    }
+
+    const response = await fetch(url, {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+    });
 
     if (response.ok) {
       const data = await response.json();

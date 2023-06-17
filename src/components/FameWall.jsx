@@ -1,9 +1,13 @@
 import React from "react";
 import StudentCard from "./StudentCard";
-import { Box, Grid } from "@mui/material";
+import { Box, Grid, CircularProgress } from "@mui/material";
 
 const FameWall = ({ students }) => {
-  const numColumns = 5;
+  if (!students) {
+    return <CircularProgress />;
+  }
+
+  const numColumns = 3;
 
   return (
     <Box
@@ -20,6 +24,13 @@ const FameWall = ({ students }) => {
         </Box>
       )}
 
+      {students.length == 2 && (
+        <Box sx={{ margin: 3 }}>
+          <Box sx={{ margin: 1 }}>
+            <StudentCard place={2} student={students[1]} />
+          </Box>
+        </Box>
+      )}
       {students.length >= 3 && (
         <Box sx={{ margin: 3 }}>
           <Grid
@@ -38,7 +49,7 @@ const FameWall = ({ students }) => {
       )}
 
       {students.length > 3 && (
-        <Box sx={{ margin: 3, width: "1000px" }}>
+        <Box sx={{ margin: 3, width: "600px" }}>
           <Box sx={{ direction: "rtl" }}>
             <Grid
               container

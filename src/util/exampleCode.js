@@ -57,7 +57,8 @@ if __name__ == "__main__":
 
     print(sudoku)
 `;
-const exapmleChalengeChode = `def find_empty(board):
+const exapmleChalengeChode = `
+def find_empty(board):
     indexes = []
     for row in range(len(board)):
         for col in range(len(board[row])):
