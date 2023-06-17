@@ -4,8 +4,7 @@ import { Table, TableHead, TableRow } from "@mui/material";
 import { formatDate } from "../../util/formatDate";
 
 function SubTable(props) {
-  const { submits, handleDownload } = props;
-  console.log(submits);
+  const { submits, handleDownload, name } = props;
   return (
     <Table size="small" aria-label="purchases">
       <TableHead>
@@ -22,7 +21,8 @@ function SubTable(props) {
             <TableCell align="center">
               <IconButton
                 onClick={() => {
-                  handleDownload(submission.code, row.name);
+                  console.log(submission);
+                  handleDownload(submission.code, name);
                 }}
               >
                 <DescriptionIcon />

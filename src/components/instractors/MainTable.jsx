@@ -68,7 +68,11 @@ return (
     <TableRow>
       <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
         <Collapse in={open} timeout="auto" unmountOnExit>
-          <SubTable submits={submits.data} handleDownload={handleDownload} />
+          <SubTable
+            submits={submits.data}
+            handleDownload={handleDownload}
+            name={row.name}
+          />
         </Collapse>
       </TableCell>
     </TableRow>
