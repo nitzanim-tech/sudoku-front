@@ -1,6 +1,10 @@
+const config = require("./config.json");
+
 async function getRegions() {
+  const url = config.url;
+
   try {
-    const response = await fetch("http://localhost:3000/region/get", {
+    const response = await fetch(`${url}region/get`, {
       method: "GET",
       headers: { "Content-Type": "application/json" },
     });

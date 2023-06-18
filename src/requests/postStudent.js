@@ -1,6 +1,10 @@
+const config = require("./config.json");
+
 async function postStudent({ studentName, selectedInst, pass }) {
   const code = localStorage.getItem("code") || "print('empty')";
   const taskValue = parseInt(localStorage.getItem("task"));
+  const url = config.url;
+
   let task;
   if (taskValue === 4) {
     task = "basic-sudoku";
@@ -9,7 +13,7 @@ async function postStudent({ studentName, selectedInst, pass }) {
   }
 
   try {
-    const response = await fetch("http://localhost:3000/student/add", {
+    const response = await fetch(url + "student/add", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

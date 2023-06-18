@@ -1,6 +1,9 @@
-async function getStudentPass(task, region=null) {
+const config = require("./config.json");
+
+async function getStudentPass(task, region = null) {
   try {
-    let url = `http://localhost:3000/student/getPass?task=${task}`;
+    let url = config.url;
+    url += `student/getPass?task=${task}`;
     if (region) {
       url += `&region=${region}`;
     }
