@@ -1,4 +1,4 @@
-const config = require("./config.json");
+import config from "./config";
 
 async function getRegions() {
   const url = config.url;
@@ -6,7 +6,7 @@ async function getRegions() {
   try {
     const response = await fetch(`${url}region/get`, {
       method: "GET",
-      headers: { "Content-Type": "application/json" },
+      headers: config.header,
     });
 
     if (response.ok) {

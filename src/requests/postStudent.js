@@ -1,4 +1,4 @@
-const config = require("./config.json");
+import config from "./config";
 
 async function postStudent({ studentName, selectedInst, pass }) {
   const code = localStorage.getItem("code") || "print('empty')";
@@ -15,9 +15,7 @@ async function postStudent({ studentName, selectedInst, pass }) {
   try {
     const response = await fetch(url + "student/add", {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
+      headers: config.header,
       body: JSON.stringify({
         name: studentName,
         instructor: selectedInst,

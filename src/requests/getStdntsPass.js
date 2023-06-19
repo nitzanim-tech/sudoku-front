@@ -1,6 +1,8 @@
-const config = require("./config.json");
+import config from "./config";
 
 async function getStudentPass(task, region = null) {
+  console.log(config.url);
+
   try {
     let url = config.url;
     url += `student/getPass?task=${task}`;
@@ -10,11 +12,11 @@ async function getStudentPass(task, region = null) {
 
     const response = await fetch(url, {
       method: "GET",
-      headers: { "Content-Type": "application/json" },
+      headers: config.header,
     });
-
     if (response.ok) {
       const data = await response.json();
+      console.log(data);
       return data;
     } else {
       return null;

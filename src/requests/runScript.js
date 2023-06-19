@@ -1,4 +1,4 @@
-const config = require("./config.json");
+import config from "./config";
 
 async function runScript({ script, input }) {
   const url = config.url;
@@ -6,7 +6,7 @@ async function runScript({ script, input }) {
   try {
     const response = await fetch(`${url}/student/run`, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: config.header,
       body: JSON.stringify({ script, input }),
     });
 

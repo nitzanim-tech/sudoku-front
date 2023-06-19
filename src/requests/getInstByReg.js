@@ -1,10 +1,12 @@
-const config = require("./config.json")
+import config from "./config";
+
 async function getInsByReg({ regionId }) {
+  console.log(config.url);
   const url = config.url;
   try {
     const response = await fetch(`${url}region/getInst/${regionId}`, {
       method: "GET",
-      headers: { "Content-Type": "application/json" },
+      headers: config.header,
     });
 
     if (response.ok) {
