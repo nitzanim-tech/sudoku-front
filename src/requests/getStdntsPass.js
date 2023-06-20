@@ -1,29 +1,27 @@
 import config from "./config";
 
 async function getStudentPass(task, region = null) {
-  console.log(config.url);
-
-  try {
     let url = config.url;
-    url += `student/getPass?task=${task}`;
-    if (region) {
-      url += `&region=${region}`;
-    }
 
-    const response = await fetch(url, {
-      method: "GET",
-      headers: config.header,
-    });
-    if (response.ok) {
-      const data = await response.json();
-      console.log(data);
-      return data;
-    } else {
+    try {
+      url += `student/getPass?task=${task}`;
+      if (region) {
+        url += `&region=${region}`;
+      }
+
+      const response = await fetch(url, {
+        method: "GET",
+        headers: config.header,
+      });
+      if (response.ok) {
+        const data = await response.json();
+        return data;
+      } else {
+        return null;
+      }
+    } catch (err) {
+      console.log(err);
       return null;
     }
-  } catch (err) {
-    console.log(err);
-    return null;
-  }
 }
 export { getStudentPass };

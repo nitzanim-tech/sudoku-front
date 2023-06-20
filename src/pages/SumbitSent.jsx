@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
-import { crossImg, verImg } from "../assets/img";
-import "/css/SubmitSent.css";
+import { verImg } from "../assets/img";
 import { useEffect } from "react";
+import "./SubmitSent.css";
 
 function SumbitSent() {
   const navigateTo = useNavigate();

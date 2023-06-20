@@ -7,6 +7,7 @@ import { examplecode } from "../util/exampleCode";
 import logoImg from "../assets/img/logo.png";
 import { OutlinedInput, InputLabel, Select, MenuItem } from "@mui/material";
 import { FormControl } from "@mui/material";
+import "./Submit.css";
 
 function Submit() {
   const [code, setCode] = useState(localStorage.getItem("code") || examplecode);
@@ -28,20 +29,8 @@ function Submit() {
 
   return (
     <>
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          width: "60vw",
-        }}
-      >
-        <button
-          onClick={handleSubmit}
-          style={{ backgroundColor: "#008AD1", color: "white" }}
-        >
-          בדוק
-        </button>
-
+      <div className="central-div">
+        <button onClick={handleSubmit}>בדוק</button>
         <FormControl>
           <InputLabel htmlFor="task-select">כתבתי</InputLabel>
           <Select
@@ -53,13 +42,12 @@ function Submit() {
               <OutlinedInput
                 label="כתבתי"
                 id="task-select"
-                style={{ width: "200px" }}
                 error={selectError}
               />
             }
           >
             <MenuItem key={4} value={4}>
-              4x4 משימה - סודוקו{" "}
+              4x4 משימה - סודוקו
             </MenuItem>
             <MenuItem key={9} value={9}>
               9x9 אתגר - סודוקו
@@ -69,19 +57,7 @@ function Submit() {
 
         <img src={logoImg} alt="Logo" />
       </div>
-      <div
-        style={{
-          backgroundColor: "#003061",
-          width: "100vw",
-          position: "relative",
-          left: "50%",
-          right: "50%",
-          marginLeft: "-50vw",
-          marginRight: "-50vw",
-          display: "flex",
-          justifyContent: "center",
-        }}
-      >
+      <div className="editor-container">
         <AceEditor
           mode="python"
           theme="chrome"
@@ -90,8 +66,6 @@ function Submit() {
           value={code}
           editorProps={{ $blockScrolling: true }}
           onChange={(newValue) => setCode(newValue)}
-          width="800px"
-          height="450px"
         />
       </div>
     </>
@@ -99,4 +73,3 @@ function Submit() {
 }
 
 export default Submit;
-

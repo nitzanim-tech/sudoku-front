@@ -1,7 +1,6 @@
 import config from "./config";
 
 async function getInsByReg({ regionId }) {
-  console.log(config.url);
   const url = config.url;
   try {
     const response = await fetch(`${url}region/getInst/${regionId}`, {
