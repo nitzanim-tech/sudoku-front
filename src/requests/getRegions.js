@@ -4,7 +4,7 @@ async function getRegions() {
   const url = config.url;
 
   try {
-    const response = await fetch(`/api/region/get`, {
+    const response = await fetch(`/region/get`, {
       method: "GET",
       headers: config.header,
     });

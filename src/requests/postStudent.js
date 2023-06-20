@@ -12,7 +12,7 @@ async function postStudent({ studentName, selectedInst, pass }) {
   }
 
   try {
-    const response = await fetch("/api/student/add", {
+    const response = await fetch("/student/add", {
       method: "POST",
       headers: config.header,
       body: JSON.stringify({

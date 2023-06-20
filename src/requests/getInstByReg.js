@@ -3,7 +3,7 @@ import config from "./config";
 async function getInsByReg({ regionId }) {
   const url = config.url;
   try {
-    const response = await fetch(`/api/region/getInst/${regionId}`, {
+    const response = await fetch(`/region/getInst/${regionId}`, {
       method: "GET",
       headers: config.header,
     });

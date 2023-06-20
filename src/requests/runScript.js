@@ -2,7 +2,7 @@ import config from "./config";
 
 async function runScript({ script, input }) {
   try {
-    const response = await fetch(`/api/student/run`, {
+    const response = await fetch(`/student/run`, {
       method: "POST",
       headers: config.header,
       body: JSON.stringify({ script, input }),
