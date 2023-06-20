@@ -13,6 +13,7 @@ function Home() {
 
   const fetchAndFormatStudents = async (task) => {
     const data = await getStudentPass(task);
+    console.log(data);
     const sortedData = data.sort((a, b) => new Date(a.date) - new Date(b.date));
     const formattedData = sortedData.map((student) => ({
       ...student,
