@@ -3,7 +3,6 @@ import config from "./config";
 async function postStudent({ studentName, selectedInst, pass }) {
   const code = localStorage.getItem("code") || "print('empty')";
   const taskValue = parseInt(localStorage.getItem("task"));
-  const url = config.url;
 
   let task;
   if (taskValue === 4) {
@@ -13,7 +12,7 @@ async function postStudent({ studentName, selectedInst, pass }) {
   }
 
   try {
-    const response = await fetch(url + "student/add", {
+    const response = await fetch("/api/student/add", {
       method: "POST",
       headers: config.header,
       body: JSON.stringify({

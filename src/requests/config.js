@@ -1,5 +1,5 @@
 const config = {
-  url: "https://3431-34-91-78-77.ngrok-free.app/",
+  url: "https://suduku-back-production.up.railway.app/",
   header: {
     "Content-Type": "application/json",
     "ngrok-skip-browser-warning": "true",

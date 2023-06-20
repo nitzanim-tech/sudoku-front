@@ -1,10 +1,8 @@
 import config from "./config";
 
 async function runScript({ script, input }) {
-  const url = config.url;
-
   try {
-    const response = await fetch(`${url}student/run`, {
+    const response = await fetch(`/api/student/run`, {
       method: "POST",
       headers: config.header,
       body: JSON.stringify({ script, input }),
