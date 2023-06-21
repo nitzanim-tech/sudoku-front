@@ -3,26 +3,8 @@ import { generateSudoku } from "../util/generateSudoku";
 import { runScript } from "../requests/runScript";
 import { SendForm, TestCard } from "../components";
 import { useNavigate } from "react-router-dom";
-/*
-function importCSS(side) {
-  let cssFile;
-  if (side === 9) {
-    cssFile = "./BigSuduku.css";
-  } else {
-    cssFile = "./SmallSuduku.css";
-  }
-  const link = document.createElement("link");
-  link.rel = "stylesheet";
-  link.href = cssFile;
-  document.head.appendChild(link);
+import("./Check.css");
 
-  return () => {
-    if (document.head.contains(link)) {
-      document.head.removeChild(link);
-    }
-  };
-}
-*/
 
 function Check() {
   const side = parseInt(localStorage.getItem("task")) || 4;
@@ -63,21 +45,17 @@ function Check() {
     pass,
     setSent,
   };
-/*
+
+
   useEffect(() => {
-    const removeCSS = importCSS(side);
+    side === 4
+      ? document.body.classList.add("small", "body--blue")
+      : document.body.classList.add("big", "body--blue");
+
     return () => {
-      removeCSS();
+      document.body.classList.remove("small","big", "body--blue");
     };
-  }, [side]);
-*/
-useEffect(() => {
-  if (side === 9) {
-    import("./BigSuduku.css");
-  } else {
-    import("./SmallSuduku.css");
-  }
-}, [side]);
+  }, []);
 
   useEffect(() => {
     async function fetchData() {

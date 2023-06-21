@@ -2,14 +2,18 @@ import config from "./config";
 
 async function runScript({ script, input }) {
   try {
-    const response = await fetch(`/student/run`, {
-      method: "POST",
-      headers: config.header,
-      body: JSON.stringify({ script, input }),
-    });
+    const response = await fetch(
+      `https://python-api.up.railway.app/runCode`,
+      {
+        method: "POST",
+        headers: config.header,
+        body: JSON.stringify({ script, input }),
+      }
+    );
 
     if (response.ok) {
       let data = await response.json();
+      console.log(data);
       return JSON.parse(data.output);
     } else {
       return null;
@@ -20,3 +24,4 @@ async function runScript({ script, input }) {
   }
 }
 export { runScript };
+

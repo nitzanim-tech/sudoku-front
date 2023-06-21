@@ -14,7 +14,7 @@ function Instructors() {
   useEffect(() => {
     async function fetchData() {
       const response = await fetch(
-        `http://localhost:3000/student/get?instId=${selectedInst}`
+        `https://suduku-back.up.railway.app/student/get?instId=${selectedInst}`
       );
       let data = await response.json();
       data = data.map((student) => ({ ...student, id: student._id }));

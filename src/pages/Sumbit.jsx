@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import AceEditor from "react-ace";
 import "ace-builds/src-noconflict/mode-python";
@@ -30,7 +30,9 @@ function Submit() {
   return (
     <>
       <div className="central-div">
-        <button onClick={handleSubmit}>בדוק</button>
+        <button onClick={handleSubmit} className="check-button">
+          בדוק
+        </button>
         <FormControl>
           <InputLabel htmlFor="task-select">כתבתי</InputLabel>
           <Select

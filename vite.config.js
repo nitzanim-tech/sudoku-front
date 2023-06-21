@@ -6,10 +6,10 @@ export default defineConfig({
   plugins: [react()],
   server: {
     proxy: {
-      "/api": {
-        target: "https://suduku-back-production.up.railway.app/",
+      "/student": {
+        target: "https://suduku-back.up.railway.app/",
         changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/api/, ""),
+        rewrite: (path) => path.replace(/^\/student/, ""),
       },
     },
   },
