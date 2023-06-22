@@ -1,18 +1,48 @@
+import React from "react";
+
 function Guidelines() {
+  const handleDownload = (file) => {
+    const link = document.createElement("a");
+    link.href = `https://drive.google.com/file/d/1472x6KrjCxrpTSDjXYtfkN_WDaLrVHo3/view?usp=sharing`;
+    link.download = file;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
   return (
-    <div style={{ width: "70%", margin: "0 auto", textAlign: "center" }}>
+    <div style={{ width: "1000px", margin: "0 auto", textAlign: "center" }}>
       <h1>משימה/אתגר קיץ</h1>
-      <h2>הנחיות הגשה</h2>
       <p>
-        אדון וגברת דַרְסְלִי, דיירי דרך פְּרִיוֶוט מספר ארבע, ידעו לדווח בגאווה
-        שהם נורמליים לגמרי ותודה ששאלתם. לא יעלה על הדעת כי מכל האנשים בעולם
-        דווקא הם יסתבכו בפרשיות מוזרות או מסתוריות, והרי הם פשוט לא סובלים
-        שטויות מסוג זה. מר דַרסְלי היה מנכ"ל של חברה בשם גְרַאנִינְגְס לייצור
-        מקדחות. הוא היה איש גדל-ממדים, בשרני, וכמעט נטול צוואר למרות שדווקא היה
-        לו שפם שמן למדי. גברת דַרסְלי היתה רזה ובלונדינית, ולה היה צוואר ארוך
-        פי-שניים מהאורך המקובל, מה שהיה שימושי מאוד, כי רוב זמנה עבר עליה בהצצה
-        מעל גדרות כדי לרגל אחר השכנים שלה. לַדַרסְלים היה תינוק ששמו דַאדְלִי,
-        ובעיניהם לא היה בעולם ילד מוצלח ממנו.
+        חניכים יקרים, כבר יצאתם לחופש וכבר אנחנו מתגעגעים. <br />
+        באתר זה תוכלו להגיש את משימת הקיץ.
+      </p>
+      <div style={{ display: "flex", justifyContent: "center" }}>
+        <div style={{ textAlign: "center" }}>
+          <img
+            src="/src/assets/img/drive.png"
+            alt="Google Drive Icon"
+            onClick={() => handleDownload("basic")}
+            className="drive-image"
+          />
+          <h4>9X9 אתגר</h4>
+        </div>
+        <div style={{ textAlign: "center" }}>
+          <img
+            src="/src/assets/img/drive.png"
+            alt="Google Drive Icon"
+            onClick={() => handleDownload("challenge")}
+            className="drive-image"
+          />
+          <h4>4X4 משימה</h4>
+        </div>
+      </div>
+      <p>
+        :לכל שאלה, צוות פיתוח שנה א' זמינים במייל
+        <br />
+        devteam.a@nitzanim.tech
+        <br />
+        <b>!בהצלחה</b>
       </p>
     </div>
   );
