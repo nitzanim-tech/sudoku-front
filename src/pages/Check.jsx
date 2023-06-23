@@ -82,7 +82,7 @@ function Check() {
 
   return (
     <div className="container">
-      <div style={{ width: "70%" }}>
+      <div className="container" style={{ width: "70%" }}>
         <div className="grid">
           {sudokusRef.current.map((sudoku, index) => (
             <TestCard
@@ -96,7 +96,7 @@ function Check() {
           ))}
         </div>
 
-        <div className="center">
+        <div className="container">
           <SendForm {...formProps} />
         </div>
       </div>

@@ -2,6 +2,10 @@
 body {
   color: rgba(14, 12, 12, 0.87);
   background-color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+
 }
 .body--blue {
   background-color: #003061;
@@ -34,8 +38,9 @@ img {
 }
 
 .ace_editor {
-  width: 800px !important;
-  height: 450px !important;
+  margin-top: 5px;
+  width: 900px !important;
+  height: 530px !important;
 }
 
 .ace_chrome {
@@ -50,12 +55,16 @@ img {
   right: 50%;
   margin-left: -50vw;
   margin-right: -50vw;
+  margin-bottom: -50vw;
   display: flex;
   justify-content: center;
+  height: 540px; 
 }
 
 .central-div {
   display: flex;
+  flex-grow: 1;
   justify-content: space-between;
   width: 60vw;
+  margin-bottom: 5px;
 }

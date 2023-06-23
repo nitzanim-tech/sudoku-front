@@ -41,7 +41,7 @@ const SendForm = ({
   };
 
   return (
-    <Card sx={{ width: "680px" }}>
+    <Card sx={{ width: "900px" }}>
       <form onSubmit={handleSubmit}>
         <Grid container spacing={2} style={{ alignItems: "center" }}>
           <Grid item xs={2}>

@@ -22,7 +22,7 @@ function TestCard({ index, outputs, isValid, loading, setIsValid, sudoku }) {
         <CardContent>
           <div className="flex">
             {outputs[index] === null ? (
-              <div style={{ width: "190px" }}>
+              <div style={{ width: sudoku.length === 9 ? "420px" : "190px" }}>
                 <h2>פלט שגוי</h2>
               </div>
             ) : (
@@ -44,8 +44,16 @@ function TestCard({ index, outputs, isValid, loading, setIsValid, sudoku }) {
               )
             )}
             <div className="margin">
-              <div style={{ display: "flex", alignItems: "center" }}>
-                <p className="gray">טסט</p>
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
+                <p className="gray" style={{ marginLeft: "auto" }}>
+                  טסט
+                </p>
                 <button
                   onClick={() => {
                     navigator.clipboard.writeText(

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import AceEditor from "react-ace";
 import "ace-builds/src-noconflict/mode-python";
@@ -13,7 +13,6 @@ function Submit() {
   const [code, setCode] = useState(localStorage.getItem("code") || examplecode);
   const [selectedTask, setSelectedTask] = useState(null);
   const [selectError, setSelectError] = useState(false);
-
   const navigate = useNavigate();
 
   const handleSubmit = () => {

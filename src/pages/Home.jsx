@@ -53,8 +53,8 @@ function Home() {
     navigateTo("/famewall");
   };
 
-  //const targetDate = Date.parse("2023-06-25T10:00:00+03:00");
-  const targetDate = Date.parse("2023-06-22T23:34:00+03:00");
+  const targetDate = Date.parse("2023-06-25T10:00:00+03:00");
+  //const targetDate = Date.parse("2023-06-22T23:34:00+03:00");
   const timer = useTimer({
     expiryTimestamp: targetDate,
     onExpire: () => setShowButtons(true),
@@ -82,7 +82,7 @@ function Home() {
       )}
 
       <div className="blue-container">
-        <div className="container">
+        <div className="container" style={{ flexDirection: "row" }}>
           <div style={{ marginRight: "20px", flex: "1" }}>
             <h3 style={{ color: "white" }}>אתגר-לוח גדול</h3>
             <FameWall students={challengeStudents} />
