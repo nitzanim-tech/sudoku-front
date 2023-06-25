@@ -1,4 +1,22 @@
 const examplecode = `
+def str_to_list(string):
+    import ast
+    return ast.literal_eval(string)
+
+
+"""
+    relevant functions
+"""
+
+if __name__ == "__main__":
+    sudoku = str_to_list(input())
+    """
+        your code
+    """
+    print(sudoku)
+`;
+
+const solutionCode = `
 def find_empty(board):
     indexes = []
     for row in range(len(board)):
