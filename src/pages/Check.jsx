@@ -86,6 +86,7 @@ function Check() {
         <div className="grid">
           {sudokusRef.current.map((sudoku, index) => (
             <TestCard
+              key={index}
               index={index}
               outputs={outputs}
               isValid={isValid}

@@ -62,7 +62,7 @@ const SendForm = ({
                 label="שם"
                 type="search"
                 value={studentName}
-                error={noNameMassage}
+                error={noNameMassage != ""}
                 helperText={noNameMassage}
                 onChange={(e) => setStudentName(e.target.value)}
               />

@@ -40,7 +40,9 @@ function checkCellValidity(fullArray, emptyCells, n) {
         break;
       }
     }
-    validCells.push(validRow && validCol && validSubGrid);
+    validCells.push(
+      fullArray[row][col] !== null && validRow && validCol && validSubGrid
+    );
   }
   return validCells;
 }

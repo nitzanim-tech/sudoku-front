@@ -146,4 +146,4 @@ if __name__ == "__main__":
     suduku = str_to_list(input())
     print(solve_suduku(suduku))
 `;
-export { examplecode, exapmleChalengeChode };
+export { examplecode };

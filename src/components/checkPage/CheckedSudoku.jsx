@@ -33,7 +33,10 @@ const CheckedSudokuTable = ({ studentAns, sudoku, onValidityChange }) => {
               const cellIndex = emptyCells.findIndex(
                 ([rowIndex, colIndex]) => rowIndex === i && colIndex === j
               );
-              const isValid = cellIndex !== -1 ? validCells[cellIndex] : true;
+              const isValid =
+                cellIndex !== -1
+                  ? validCells[cellIndex] && cell !== null
+                  : true;
               return (
                 <td
                   key={j}

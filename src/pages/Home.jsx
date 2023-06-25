@@ -14,11 +14,10 @@ function Home() {
   const [students, setStudents] = useState([]);
   const [open, setOpen] = useState(false);
   const [challengeStudents, setChallengeStudents] = useState([]);
-  const [showButtons, setShowButtons] = useState(false);
+  const [showButtons, setShowButtons] = useState(true);
 
   const fetchAndFormatStudents = async (task) => {
     const data = await getStudentPass(task);
-    console.log(data);
     const sortedData = data.sort((a, b) => new Date(a.date) - new Date(b.date));
     const formattedData = sortedData.map((student) => ({
       ...student,
@@ -54,7 +53,6 @@ function Home() {
   };
 
   const targetDate = Date.parse("2023-06-25T10:00:00+03:00");
-  //const targetDate = Date.parse("2023-06-22T23:34:00+03:00");
   const timer = useTimer({
     expiryTimestamp: targetDate,
     onExpire: () => setShowButtons(true),
@@ -76,7 +74,6 @@ function Home() {
       ) : (
         <div className="timer-container">
           <h1>:אנחנו מתחילים עוד</h1>
-          <Timer targetDate={targetDate} />
           <h3>ראשון | 25.06.23 | 10:00</h3>
         </div>
       )}

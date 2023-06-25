@@ -1,27 +1,26 @@
 import config from "./config";
 
 async function runScript({ script, input }) {
+  let response;
   try {
-    const response = await fetch(
-      `https://python-api.up.railway.app/runCode`,
-      {
-        method: "POST",
-        headers: config.header,
-        body: JSON.stringify({ script, input }),
-      }
-    );
+    response = await fetch(`https://python-api.up.railway.app/runCode`, {
+      method: "POST",
+      headers: config.header,
+      body: JSON.stringify({ script, input }),
+    });
 
     if (response.ok) {
       let data = await response.json();
-      console.log(data);
-      return JSON.parse(data.output);
+      if (data.output.includes("Traceback")) {
+        return { error: data.output };
+      } else {
+        return JSON.parse(data.output.replace(/\bNone\b/g, "null"));
+      }
     } else {
       return null;
     }
   } catch (err) {
-    console.log(err);
-    return null;
+    return { error: err };
   }
 }
 export { runScript };
-

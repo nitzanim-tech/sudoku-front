@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { crossImg, verImg } from "../../assets/img";
 import { Card, CardContent, CircularProgress, Snackbar } from "@mui/material";
 import { Sudoku, CheckedSudoku } from "../../components";
@@ -6,6 +6,19 @@ import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 
 function TestCard({ index, outputs, isValid, loading, setIsValid, sudoku }) {
   const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [outputData, setOutputData] = useState(null);
+  const [reload, setReload] = useState(false);
+
+  useEffect(() => {
+    if (outputs[index]) {
+      setOutputData(outputs[index]);
+    }
+  }, [outputs]);
+
+  const refreshPage = () => {
+    setReload(true);
+    setReload(false);
+  };
 
   return (
     <Card key={index} className="card">
@@ -21,28 +34,31 @@ function TestCard({ index, outputs, isValid, loading, setIsValid, sudoku }) {
       ) : (
         <CardContent>
           <div className="flex">
-            {outputs[index] === null ? (
-              <div style={{ width: sudoku.length === 9 ? "420px" : "190px" }}>
-                <h2>פלט שגוי</h2>
-              </div>
-            ) : (
-              outputs[index].length > 0 && (
+            <div className="flex">
+              {outputData && outputData.length > 0 && (
                 <div className="margin">
                   <p className="gray">פלט</p>
-                  <CheckedSudoku
-                    studentAns={outputs[index]}
-                    sudoku={sudoku}
-                    onValidityChange={(valid) => {
-                      setIsValid((prevIsValid) => {
-                        const newIsValid = [...prevIsValid];
-                        newIsValid[index] = valid;
-                        return newIsValid;
-                      });
-                    }}
-                  />
+                  {outputData.error ? (
+                    <div>
+                      <p>{outputData.error}</p>
+                    </div>
+                  ) : (
+                    <CheckedSudoku
+                      studentAns={outputData}
+                      sudoku={sudoku}
+                      onValidityChange={(valid) => {
+                        setIsValid((prevIsValid) => {
+                          const newIsValid = [...prevIsValid];
+                          newIsValid[index] = valid;
+                          return newIsValid;
+                        });
+                      }}
+                    />
+                  )}
                 </div>
-              )
-            )}
+              )}
+            </div>
+
             <div className="margin">
               <div
                 style={{
@@ -81,5 +97,4 @@ function TestCard({ index, outputs, isValid, loading, setIsValid, sudoku }) {
     </Card>
   );
 }
-
 export default TestCard;
