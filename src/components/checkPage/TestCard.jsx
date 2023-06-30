@@ -7,18 +7,22 @@ import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 function TestCard({ index, outputs, isValid, loading, setIsValid, sudoku }) {
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [outputData, setOutputData] = useState(null);
-  const [reload, setReload] = useState(false);
+  const [tracebackMassage, setTracebackMassage] = useState("");
 
+  function cleanTraceback(traceback) {
+    let lines = traceback.split("\n");
+    lines.splice(1, 2);
+    return lines.join("\n");
+  }
   useEffect(() => {
     if (outputs[index]) {
       setOutputData(outputs[index]);
+      if (outputs[index].error) {
+        let traceback = outputs[index].error;
+        setTracebackMassage(cleanTraceback(traceback));
+      }
     }
   }, [outputs]);
-
-  const refreshPage = () => {
-    setReload(true);
-    setReload(false);
-  };
 
   return (
     <Card key={index} className="card">
@@ -38,11 +42,8 @@ function TestCard({ index, outputs, isValid, loading, setIsValid, sudoku }) {
               {outputData && outputData.length > 0 && (
                 <div className="margin">
                   <p className="gray">פלט</p>
-                  {outputData.error ? (
-                    <div>
-                      <p>{outputData.error}</p>
-                    </div>
-                  ) : (
+
+                  {!tracebackMassage ? (
                     <CheckedSudoku
                       studentAns={outputData}
                       sudoku={sudoku}
@@ -54,9 +55,16 @@ function TestCard({ index, outputs, isValid, loading, setIsValid, sudoku }) {
                         });
                       }}
                     />
-                  )}
+                  ) : null}
                 </div>
               )}
+              <div
+                className="traceback-massage"
+                style={{ maxWidth: sudoku.length === 4 ? "180px" : "400px" }}
+                dangerouslySetInnerHTML={{
+                  __html: tracebackMassage.replace(/\n/g, "<br>"),
+                }}
+              />
             </div>
 
             <div className="margin">
@@ -65,8 +73,7 @@ function TestCard({ index, outputs, isValid, loading, setIsValid, sudoku }) {
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
-                }}
-              >
+                }}>
                 <p className="gray" style={{ marginLeft: "auto" }}>
                   טסט
                 </p>
@@ -76,8 +83,7 @@ function TestCard({ index, outputs, isValid, loading, setIsValid, sudoku }) {
                       JSON.stringify(sudoku).replace(/\bnull\b/g, "None")
                     );
                     setSnackbarOpen(true);
-                  }}
-                >
+                  }}>
                   <ContentCopyIcon />
                 </button>
               </div>

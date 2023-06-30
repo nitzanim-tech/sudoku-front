@@ -23,6 +23,16 @@
   margin-left: 20px;
 }
 
+.traceback-massage {
+  white-space: pre-wrap;
+  font-size: smaller;
+  align-items: center;
+  justify-content: flex-start;
+  text-align: left;
+  margin-right: 5px;
+}
+
+
 .small .grid {
   display: grid;
   grid-template-columns: 450px 450px;
