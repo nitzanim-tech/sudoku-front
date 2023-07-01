@@ -14,6 +14,7 @@ function TestCard({ index, outputs, isValid, loading, setIsValid, sudoku }) {
     lines.splice(1, 2);
     return lines.join("\n");
   }
+  
   useEffect(() => {
     if (outputs[index]) {
       setOutputData(outputs[index]);

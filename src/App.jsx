@@ -3,7 +3,7 @@ import Home from "./pages/Home";
 import Sumbit from "./pages/Sumbit";
 import Check from "./pages/Check";
 import SumbitSent from "./pages/SumbitSent";
-import Instructors from "./pages/Instructors";
+import Instructors from "./pages/instractors/Instructors";
 import RegionalFameWall from "./pages/RegionalFameWall";
 import "./App.css";
 

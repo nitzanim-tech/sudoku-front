@@ -2,10 +2,10 @@ import React from "react";
 import { useState, useEffect } from "react";
 import { Card, TableBody, TableCell, TableContainer } from "@mui/material";
 import { Table, TableHead, TableRow, Paper } from "@mui/material";
-import MainTable from "../components/instractorsPage/MainTable";
-import SelectInst from "../components/SelectInst";
-import logoImg from "../assets/img/logo.png";
-import DownloadIcon from "../components/instractorsPage/DownloadIcon";
+import MainTable from "../../components/instractorsPage/MainTable";
+import SelectInst from "../../components/SelectInst";
+import logoImg from "../../assets/img/logo.png";
+import DownloadIcon from "../../components/instractorsPage/DownloadIcon";
 
 function Instructors() {
   const [students, setStudents] = useState([]);
@@ -39,7 +39,7 @@ function Instructors() {
       style={{
         width: "700px",
       }}>
-      <DownloadIcon students={students} />
+      {students.length > 0 && <DownloadIcon students={students} />}
       <img src={logoImg} alt="Logo" />
       <Card style={{ margin: "20px" }}>
         <SelectInst
