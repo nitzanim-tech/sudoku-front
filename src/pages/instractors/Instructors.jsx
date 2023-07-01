@@ -1,16 +1,19 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import { Card, TableBody, TableCell, TableContainer } from "@mui/material";
-import { Table, TableHead, TableRow, Paper } from "@mui/material";
-import MainTable from "../../components/instractorsPage/MainTable";
+import { Card } from "@mui/material";
 import SelectInst from "../../components/SelectInst";
 import logoImg from "../../assets/img/logo.png";
 import DownloadIcon from "../../components/instractorsPage/DownloadIcon";
+import PasswordDialog from "../../components/instractorsPage/PasswordDialog";
+import TableFrame from "../../components/instractorsPage/TableFrame";
 
 function Instructors() {
   const [students, setStudents] = useState([]);
   const [selectedRegion, setSelectedRegion] = useState("");
   const [selectedInst, setSelectedInst] = useState("");
+  const [passwordDialogOpen, setPasswordDialogOpen] = useState(
+    !localStorage.getItem("token")
+  );
 
   useEffect(() => {
     async function fetchData() {
@@ -23,16 +26,6 @@ function Instructors() {
     }
     fetchData();
   }, [selectedInst]);
-
-  const handleDownload = (code, name) => {
-    const fileName = `${name.replace(/ /g, "_")}.py`;
-    const blob = new Blob([code], { type: "text/plain" });
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement("a");
-    link.href = url;
-    link.download = fileName;
-    link.click();
-  };
 
   return (
     <div
@@ -49,57 +42,13 @@ function Instructors() {
           setSelectedInst={setSelectedInst}
         />
       </Card>
-      <TableContainer component={Paper}>
-        <Table aria-label="collapsible table">
-          <TableHead>
-            <TableRow>
-              <TableCell />
-              <TableCell>
-                <b>הגשה אחרונה</b>
-              </TableCell>
-              <TableCell>
-                <b>קובץ אחרון</b>
-              </TableCell>
-              <TableCell>
-                <b>טסטים</b>
-              </TableCell>
-              <TableCell>
-                <b>שם</b>
-              </TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            <tr>
-              <td dir="rtl">
-                <b>משימה</b>
-              </td>
-            </tr>
-            {students.map((student) => (
-              <MainTable
-                key={student.id}
-                row={student}
-                handleDownload={handleDownload}
-                task="basic-sudoku"
-              />
-            ))}
-          </TableBody>
-          <TableBody>
-            <tr>
-              <td dir="rtl">
-                <b>אתגר</b>
-              </td>
-            </tr>
-            {students.map((student) => (
-              <MainTable
-                key={student.id}
-                row={student}
-                handleDownload={handleDownload}
-                task="challenge-sudoku"
-              />
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
+
+      <PasswordDialog
+        open={passwordDialogOpen}
+        onEnter={() => setPasswordDialogOpen(false)}
+      />
+
+      <TableFrame students={students} />
     </div>
   );
 }
