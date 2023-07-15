@@ -57,22 +57,20 @@ function Check() {
     };
   }, []);
 
-  useEffect(() => {
-    async function fetchData() {
-      setLoading(true);
-      const outputs = await Promise.all(
-        sudokusRef.current.map((sudoku) =>
-          runScript({
-            script: code,
-            input: sudoku,
-          })
-        )
-      );
-      setOutputs(outputs);
-      setLoading(false);
-    }
-    fetchData();
-  }, []);
+useEffect(() => {
+  async function fetchData() {
+    setLoading(true);
+    const response = await runScript({
+      script: code,
+      inputs: sudokusRef.current,
+    });
+    setOutputs(response.outputs);
+    console.log(outputs);
+    setLoading(false);
+  }
+  fetchData();
+}, []);
+
 
   useEffect(() => {
     if (sent) {
