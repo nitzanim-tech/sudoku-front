@@ -1,9 +1,9 @@
-import config from "./config";
+import config from './config';
 
 async function runScript({ script, inputs }) {
   let response;
   try {
-    response = await fetch(`http://192.168.61.42:5000/runCode`, {
+    response = await fetch(`https://python-api.up.railway.app/runCode`, {
       method: 'POST',
       headers: config.header,
       body: JSON.stringify({ script, inputs }),
@@ -11,14 +11,9 @@ async function runScript({ script, inputs }) {
 
     if (response.ok) {
       let data = await response.json();
+      console.log(data);
       if (data.outputs) {
-        return {
-          outputs: data.outputs.map((output) =>
-            output.includes('Traceback')
-              ? { error: output }
-              : JSON.parse(output.replace(/\bNone\b/g, 'null')),
-          ),
-        };
+        return processOutputs(data.outputs);
       } else {
         return null;
       }
@@ -29,4 +24,23 @@ async function runScript({ script, inputs }) {
     return { error: err };
   }
 }
+
+function processOutputs(outputs) {
+  return {
+    outputs: outputs.map((output) =>
+      !output
+        ? { error: 'There is no output!' }
+        : output.includes('Traceback')
+        ? { error: output }
+        : (() => {
+            try {
+              return JSON.parse(output.replace(/\bNone\b/g, 'null'));
+            } catch (err) {
+              return { error: 'The output is not a legal 2d list' };
+            }
+          })(),
+    ),
+  };
+}
+
 export { runScript };
