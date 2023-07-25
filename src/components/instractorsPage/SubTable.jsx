@@ -21,7 +21,6 @@ function SubTable(props) {
             <TableCell align="center">
               <IconButton
                 onClick={() => {
-                  console.log(submission);
                   handleDownload(submission.code, name);
                 }}
               >

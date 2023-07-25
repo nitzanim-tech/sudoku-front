@@ -11,7 +11,6 @@ async function runScript({ script, inputs }) {
 
     if (response.ok) {
       let data = await response.json();
-      console.log(data);
       if (data.outputs) {
         return processOutputs(data.outputs);
       } else {

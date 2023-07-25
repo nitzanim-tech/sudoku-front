@@ -65,7 +65,6 @@ useEffect(() => {
       inputs: sudokusRef.current,
     });
     setOutputs(response.outputs);
-    console.log(outputs);
     setLoading(false);
   }
   fetchData();

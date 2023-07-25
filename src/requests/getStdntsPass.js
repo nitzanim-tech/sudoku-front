@@ -1,22 +1,20 @@
 import config from "./config";
 
-async function getStudentPass(task, region = null) {
-  let url = config.url;
-
+async function getStudentPass(tasks, region = null) {
+  //let url = config.url;
+  let url = 'http://localhost:3000/';
   try {
-    url = `${url}student/getPass?task=${task}`;
+    url = `${url}student/getPass?task=${tasks.join('&&task=')}`;
     if (region) {
       url += `&region=${region}`;
     }
 
     const response = await fetch(url, {
-      method: "GET",
+      method: 'GET',
       headers: config.header,
     });
     if (response.ok) {
       const data = await response.json();
-      console.log(data);
-
       return data;
     } else {
       return null;

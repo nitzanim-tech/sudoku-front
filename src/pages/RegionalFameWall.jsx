@@ -5,20 +5,20 @@ import { getRegions } from "../requests/getRegions";
 import { formatDate } from "../util/formatDate";
 import {  FameWall } from "../components";
 
+
+const formatData = (data) => {
+  const sortedData = data.sort((a, b) => new Date(a.date) - new Date(b.date));
+  const formattedData = sortedData.map((student) => ({
+    ...student,
+    date: formatDate(student.date),
+  }));
+  return formattedData;
+};
+
 function RegionalFameWall() {
   const navigateTo = useNavigate();
   const [regions, setRegions] = useState([]);
   const [studentsByRegion, setStudentsByRegion] = useState({});
-
-  const fetchAndFormatStudents = async (task, region) => {
-    const data = await getStudentPass(task, region);
-    const sortedData = data.sort((a, b) => new Date(a.date) - new Date(b.date));
-    const formattedData = sortedData.map((student) => ({
-      ...student,
-      date: formatDate(student.date),
-    }));
-    return formattedData;
-  };
 
   useEffect(() => {
     const fetchRegionsAndStudents = async () => {
@@ -27,12 +27,11 @@ function RegionalFameWall() {
 
       const studentsByRegionData = {};
       for (const region of regionsData) {
+        const tasks = ['basic-sudoku', 'challenge-sudoku'];
+        const data = await getStudentPass(tasks, region.name);
         studentsByRegionData[region.name] = {
-          basic: await fetchAndFormatStudents("basic-sudoku", region.name),
-          challenge: await fetchAndFormatStudents(
-            "challenge-sudoku",
-            region.name
-          ),
+          basic: formatData(data[tasks[0]]),
+          challenge: formatData(data[tasks[1]]),
         };
       }
       setStudentsByRegion(studentsByRegionData);
@@ -41,17 +40,16 @@ function RegionalFameWall() {
   }, []);
 
   const handleClick = () => {
-    navigateTo("/");
+    navigateTo('/');
   };
-
 
   return (
     <>
       <button
         style={{
-          backgroundColor: "#008AD1",
-          color: "white",
-          marginBottom: "20px",
+          backgroundColor: '#008AD1',
+          color: 'white',
+          marginBottom: '20px',
         }}
         onClick={handleClick}
       >
@@ -62,35 +60,35 @@ function RegionalFameWall() {
         <div
           key={region.id}
           style={{
-            backgroundColor: index % 2 === 0 ? "#003061" : "white",
-            width: "100vw",
-            position: "relative",
-            left: "50%",
-            right: "50%",
-            marginLeft: "-50vw",
-            marginRight: "-50vw",
-            paddingTop: "20px",
+            backgroundColor: index % 2 === 0 ? '#003061' : 'white',
+            width: '100vw',
+            position: 'relative',
+            left: '50%',
+            right: '50%',
+            marginLeft: '-50vw',
+            marginRight: '-50vw',
+            paddingTop: '20px',
           }}
         >
-          <h2 style={{ color: index % 2 === 0 ? "white" : "#003061" }}>
+          <h2 style={{ color: index % 2 === 0 ? 'white' : '#003061' }}>
             {region.name}
           </h2>
-          <div style={{ display: "flex", justifyContent: "center" }}>
-            <div style={{ marginRight: "20px", flex: "1" }}>
-              <h3 style={{ color: index % 2 === 0 ? "white" : "#003061" }}>
+          <div style={{ display: 'flex', justifyContent: 'center' }}>
+            <div style={{ marginRight: '20px', flex: '1' }}>
+              <h3 style={{ color: index % 2 === 0 ? 'white' : '#003061' }}>
                 אתגר-לוח גדול
               </h3>
               <FameWall students={studentsByRegion[region.name]?.challenge} />
             </div>
             <div
               style={{
-                backgroundColor: index % 2 === 0 ? "white" : "#003061",
-                width: "2px",
-                height: "100%",
+                backgroundColor: index % 2 === 0 ? 'white' : '#003061',
+                width: '2px',
+                height: '100%',
               }}
             />
-            <div style={{ flex: "1" }}>
-              <h3 style={{ color: index % 2 === 0 ? "white" : "#003061" }}>
+            <div style={{ flex: '1' }}>
+              <h3 style={{ color: index % 2 === 0 ? 'white' : '#003061' }}>
                 משימה-לוח קטן
               </h3>
               <FameWall students={studentsByRegion[region.name]?.basic} />

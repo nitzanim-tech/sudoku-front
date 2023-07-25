@@ -9,30 +9,28 @@ import { useTimer } from "react-timer-hook";
 
 import "./Home.css";
 
+const formatData = (data) => {
+  const sortedData = data.sort((a, b) => new Date(a.date) - new Date(b.date));
+  const formattedData = sortedData.map((student) => ({
+    ...student,
+    date: formatDate(student.date),
+  }));
+  return formattedData;
+};
+
 function Home() {
   const navigateTo = useNavigate();
-  const [students, setStudents] = useState([]);
   const [open, setOpen] = useState(false);
+  const [basicStudents, setBasicStudents] = useState([]);
   const [challengeStudents, setChallengeStudents] = useState([]);
   const [showButtons, setShowButtons] = useState(true);
 
-  const fetchAndFormatStudents = async (task) => {
-    const data = await getStudentPass(task);
-    const sortedData = data.sort((a, b) => new Date(a.date) - new Date(b.date));
-    const formattedData = sortedData.map((student) => ({
-      ...student,
-      date: formatDate(student.date),
-    }));
-    return formattedData;
-  };
-
   useEffect(() => {
     const fetchStudents = async () => {
-      const basicData = await fetchAndFormatStudents("basic-sudoku");
-      setStudents(basicData);
-
-      const challengeData = await fetchAndFormatStudents("challenge-sudoku");
-      setChallengeStudents(challengeData);
+      const tasks = ['basic-sudoku', 'challenge-sudoku'];
+      const data = await getStudentPass(tasks);
+      setBasicStudents(formatData(data[tasks[0]]));
+      setChallengeStudents(formatData(data[tasks[1]]));
     };
     fetchStudents();
   }, []);
@@ -46,13 +44,13 @@ function Home() {
   };
 
   const handleAgree = () => {
-    navigateTo("/submit");
+    navigateTo('/submit');
   };
   const handleClickToFW = () => {
-    navigateTo("/famewall");
+    navigateTo('/famewall');
   };
 
-  const targetDate = Date.parse("2023-06-25T10:00:00+03:00");
+  const targetDate = Date.parse('2023-06-25T10:00:00+03:00');
   const timer = useTimer({
     expiryTimestamp: targetDate,
     onExpire: () => setShowButtons(true),
@@ -79,21 +77,21 @@ function Home() {
       )}
 
       <div className="blue-container">
-        <div className="container" style={{ flexDirection: "row" }}>
-          <div style={{ marginRight: "20px", flex: "1" }}>
-            <h3 style={{ color: "white" }}>אתגר-לוח גדול</h3>
+        <div className="container" style={{ flexDirection: 'row' }}>
+          <div style={{ marginRight: '20px', flex: '1' }}>
+            <h3 style={{ color: 'white' }}>אתגר-לוח גדול</h3>
             <FameWall students={challengeStudents} />
           </div>
           <div
             style={{
-              backgroundColor: "white",
-              width: "2px",
-              height: "100%",
+              backgroundColor: 'white',
+              width: '2px',
+              height: '100%',
             }}
           />
-          <div style={{ flex: "1" }}>
-            <h3 style={{ color: "white" }}>משימה-לוח קטן</h3>
-            <FameWall students={students} />
+          <div style={{ flex: '1' }}>
+            <h3 style={{ color: 'white' }}>משימה-לוח קטן</h3>
+            <FameWall students={basicStudents} />
           </div>
         </div>
       </div>
