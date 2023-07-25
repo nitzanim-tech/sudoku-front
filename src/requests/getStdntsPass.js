@@ -1,8 +1,7 @@
 import config from "./config";
 
 async function getStudentPass(tasks, region = null) {
-  //let url = config.url;
-  let url = 'http://localhost:3000/';
+  let url = config.url;
   try {
     url = `${url}student/getPass?task=${tasks.join('&&task=')}`;
     if (region) {
