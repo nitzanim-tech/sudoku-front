@@ -7,7 +7,7 @@ const TimerContainer = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  margin-bottom: 30px;
+  margin: 0 0 10px 0px;
 `;
 
 const SepartorContainer = styled.span`

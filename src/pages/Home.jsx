@@ -6,6 +6,9 @@ import { formatDate } from "../util/formatDate";
 import { ConfirmationDialog, FameWall, Guidelines } from "../components";
 import Timer from "../components/homePage/Timer";
 import { useTimer } from "react-timer-hook";
+import useAnalyticsEventTracker from '../util/useAnalyticsEventTracker';
+import styled from 'styled-components';
+import Divider from '@mui/material/Divider';
 
 import "./Home.css";
 
@@ -24,6 +27,8 @@ function Home() {
   const [basicStudents, setBasicStudents] = useState([]);
   const [challengeStudents, setChallengeStudents] = useState([]);
   const [showButtons, setShowButtons] = useState(true);
+  
+  const gaEventTracker = useAnalyticsEventTracker('Home');
 
   useEffect(() => {
     const fetchStudents = async () => {
@@ -44,37 +49,51 @@ function Home() {
   };
 
   const handleAgree = () => {
+    gaEventTracker('agree')
     navigateTo('/submit');
   };
   const handleClickToFW = () => {
     navigateTo('/famewall');
   };
 
-  const targetDate = Date.parse('2023-06-25T10:00:00+03:00');
+  const targetDate = Date.parse('2023-08-15T20:00:00+03:00');
   const timer = useTimer({
     expiryTimestamp: targetDate,
     onExpire: () => setShowButtons(true),
   });
 
+
+const ParentDiv = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  margin: 10px;
+`;
+
   return (
     <>
-      <img src={logoImg}></img>
-      {showButtons ? (
-        <>
-          <Guidelines />
-          <button className="home-button" onClick={handleClickOpen}>
-            להגשה
-          </button>
-          <button className="home-button" onClick={handleClickToFW}>
-            לקיר התהילה
-          </button>
-        </>
-      ) : (
+      <ParentDiv>
         <div className="timer-container">
-          <h1>:אנחנו מתחילים עוד</h1>
-          <h3>ראשון | 25.06.23 | 10:00</h3>
+          <h2>:האתר נסגר להגשות עוד</h2>
+          <Timer targetDate={targetDate} />
+          <h3>שלישי | 15.08.23 | 20:00</h3>
         </div>
-      )}
+          <Divider orientation="vertical" flexItem/>
+
+        <div className="vertical-layout">
+          <img src={logoImg}></img>
+          <h1>משימה/אתגר קיץ</h1>
+          <Guidelines />
+        </div>
+      </ParentDiv>
+
+      <button className="home-button" onClick={handleClickOpen}>
+        להגשה
+      </button>
+      <button className="home-button" onClick={handleClickToFW}>
+        לקיר התהילה
+      </button>
 
       <div className="blue-container">
         <div className="container" style={{ flexDirection: 'row' }}>
