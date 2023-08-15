@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import("./Check.css");
 
 
-function Check() {
+function Check({deadline}) {
   const side = parseInt(localStorage.getItem("task")) || 4;
   const code = localStorage.getItem("code") || "";
   const sudokusRef = useRef(
@@ -35,17 +35,10 @@ function Check() {
 
   const navigate = useNavigate();
   const pass = isValid.every((value) => value === true);
-  const formProps = {
-    studentName,
-    setStudentName,
-    selectedRegion,
-    setSelectedRegion,
-    selectedInst,
-    setSelectedInst,
-    pass,
-    setSent,
-  };
-
+  const formProps = {studentName,setStudentName, selectedRegion,setSelectedRegion,selectedInst,setSelectedInst,pass,setSent };
+  
+  const currentTime = new Date();
+  const isTimeOver = currentTime >= new Date(deadline);
 
   useEffect(() => {
     side === 4
@@ -94,9 +87,9 @@ useEffect(() => {
           ))}
         </div>
 
-        <div className="container">
+{!isTimeOver &&       <div className="container">
           <SendForm {...formProps} />
-        </div>
+        </div>}
       </div>
     </div>
   );

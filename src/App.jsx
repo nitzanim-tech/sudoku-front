@@ -16,14 +16,14 @@ function App() {
     useEffect(() => {
     ReactGA.send("pageview", window.location.pathname + window.location.search);
   }, []);
+  const deadline = '2023-08-15T19:03:00+03:00'
 
   return (
     <BrowserRouter>
-
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={<Home deadline={deadline}/>} />
         <Route path="/submit" element={<Sumbit />} />
-        <Route path="/check" element={<Check />} />
+        <Route path="/check" element={<Check deadline={deadline}/>} />
         <Route path="/sent" element={<SumbitSent />} />
         <Route path="/famewall" element={<RegionalFameWall />} />
         <Route path="/inst" element={<Instructors />} />

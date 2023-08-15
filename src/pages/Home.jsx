@@ -21,14 +21,16 @@ const formatData = (data) => {
   return formattedData;
 };
 
-function Home() {
+function Home({deadline}) {
   const navigateTo = useNavigate();
   const [open, setOpen] = useState(false);
   const [basicStudents, setBasicStudents] = useState([]);
   const [challengeStudents, setChallengeStudents] = useState([]);
-  const [showButtons, setShowButtons] = useState(true);
-  
+
   const gaEventTracker = useAnalyticsEventTracker('Home');
+  
+  const currentTime = new Date();
+  const isTimeOver = currentTime >= new Date(deadline);
 
   useEffect(() => {
     const fetchStudents = async () => {
@@ -56,11 +58,11 @@ function Home() {
     navigateTo('/famewall');
   };
 
-  const targetDate = Date.parse('2023-08-15T20:00:00+03:00');
-  const timer = useTimer({
-    expiryTimestamp: targetDate,
-    onExpire: () => setShowButtons(true),
-  });
+  const targetDate = Date.parse(deadline);
+  // const timer = useTimer({
+  //   expiryTimestamp: targetDate,
+  //   onExpire: () => setShowButtons(false),
+  // });
 
 
 const ParentDiv = styled.div`
@@ -73,23 +75,27 @@ const ParentDiv = styled.div`
 
   return (
     <>
-      <ParentDiv>
-        <div className="timer-container">
-          <h2>:האתר נסגר להגשות עוד</h2>
-          <Timer targetDate={targetDate} />
-          <h3>שלישי | 15.08.23 | 20:00</h3>
-        </div>
+        <ParentDiv>
+          {!isTimeOver ? (
+            <div className="timer-container">
+                      <h2>:האתר יסגר להגשות עוד</h2>
+<Timer targetDate={targetDate} />
+            <h3>שלישי | 15.08.23 | 20:00</h3>
+          </div>
+      ) : (
+          <h2 style={{ color: '#003061', margin: '20px' }}>האתר סגור להגשות</h2>
+        )}
           <Divider orientation="vertical" flexItem/>
+          <div className="vertical-layout">
+            <img src={logoImg}></img>
+            <h1>משימה/אתגר קיץ</h1>
+            <Guidelines />
+          </div>
+        </ParentDiv>
 
-        <div className="vertical-layout">
-          <img src={logoImg}></img>
-          <h1>משימה/אתגר קיץ</h1>
-          <Guidelines />
-        </div>
-      </ParentDiv>
 
       <button className="home-button" onClick={handleClickOpen}>
-        להגשה
+        {!isTimeOver? 'להגשה': 'לבדיקה'}
       </button>
       <button className="home-button" onClick={handleClickToFW}>
         לקיר התהילה
@@ -101,13 +107,7 @@ const ParentDiv = styled.div`
             <h3 style={{ color: 'white' }}>אתגר-לוח גדול</h3>
             <FameWall students={challengeStudents} />
           </div>
-          <div
-            style={{
-              backgroundColor: 'white',
-              width: '2px',
-              height: '100%',
-            }}
-          />
+
           <div style={{ flex: '1' }}>
             <h3 style={{ color: 'white' }}>משימה-לוח קטן</h3>
             <FameWall students={basicStudents} />

@@ -7,8 +7,7 @@ function Guidelines() {
     if (file == "basic") {
       link.href = `https://drive.google.com/file/d/1P2Q-NpB9gLWmcgl3iGvKYlCLSonKubNF/view?usp=sharing`;
     } else {
-      link.href =
-        "https://drive.google.com/file/d/1A4gOAv-GYNumLRCd8cnrKdaLBIMQXJob/view?usp=sharing";
+      link.href =  "https://drive.google.com/file/d/1A4gOAv-GYNumLRCd8cnrKdaLBIMQXJob/view?usp=sharing";
     }
     document.body.appendChild(link);
     link.click();
