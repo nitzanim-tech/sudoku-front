@@ -56,7 +56,7 @@ const SelectInst = ({
         <FormControl fullWidth variant="outlined" sx={{ mt: 1 }}>
           <InputLabel htmlFor="region-select">אזור</InputLabel>
           <Select
-            labelId="region-label"
+            labelId="region-label" 
             id="region-select"
             value={selectedRegion || ""}
             onChange={(e) => setSelectedRegion(e.target.value)}

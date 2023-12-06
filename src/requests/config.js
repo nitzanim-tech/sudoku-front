@@ -1,5 +1,5 @@
 const config = {
-  url: "https://suduku-back.up.railway.app/",
+  url: "http://localhost:3000/",
   header: {
     "Content-Type": "application/json",
     "ngrok-skip-browser-warning": "true",
