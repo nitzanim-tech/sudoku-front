@@ -17,7 +17,7 @@ function Instructors() {
 
   async function fetchData() {
     const response = await fetch(
-      `https://suduku-back.up.railway.app/student/get?instId=${selectedInst}`,
+      `http://localhost:3000/student/get?instId=${selectedInst}`,
       {
         headers: {
           Authorization: `${localStorage.getItem('token')}`,

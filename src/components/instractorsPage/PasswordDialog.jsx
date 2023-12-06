@@ -12,16 +12,13 @@ const PasswordDialog = ({ open, onEnter }) => {
 
   const handleEnter = async () => {
     try {
-      const response = await fetch(
-        'https://suduku-back.up.railway.app/inst/login',
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ password }),
+      const response = await fetch('http://localhost:3000/inst/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
         },
-      );
+        body: JSON.stringify({ password }),
+      });
       const data = await response.json();
       if (data.token) {
         localStorage.setItem('token', data.token);
